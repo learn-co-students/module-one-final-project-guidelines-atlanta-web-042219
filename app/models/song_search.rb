@@ -1,25 +1,13 @@
-class SongRequest < ActiveRecord::Base
+class SongSearch < ActiveRecord::Base
 	belongs_to :user
-	# belongs_to :song
+	belongs_to :song
 
-	attr_accessor :user, :song
-	@@all = []
-
-	def self.all
-		@@all
-	end
-
-	def initialize(user)
-		@user = user
-		@@all << self
-	end
-
-	def send_request(artist_name, song_title)
+	def search_request(artist, song)
 		# print "\n"
 		# spinner = TTY::Spinner.new("[:spinner] Searching for your song ", format: :dots)
 		# spinner.auto_spin
 
-		# response = RestClient.get(%Q[api.lyrics.ovh/v1/mystery%20skulls/fantasy])
+		# response = RestClient.get(%Q[api.lyrics.ovh/v1/#{artist.gsub(' ','%20')}/#{song.gsub(' ','%20')])
 		# response_hash = JSON.parse(response)
 
 		response_hash = {"lyrics" => "Baby. There's just one thing I need from you\nBaby. I'll tell you what I'm gonna do\nLately. I think I need you on my team\n'Cause lately. You're my fucking fantasy\nUh (Uuh)\n\nLately. All I think about is you\nBaby. I don't know what I'm gonna do\nAnd you got. You got me beggin' please\n'Cause baby. You're my fucking fantasy\nUh (Uuh)\n\nYeah baby\n\nWant you baby\nYou're my fantasy\nWant you. Need you\nWant you. Need, need\nWant you\nBaby. You're my fantasy\n\nYeah\nBaby. Baby. Baby"}
@@ -30,30 +18,25 @@ class SongRequest < ActiveRecord::Base
 			print "\nPress ENTER to try again..."
 			gets
 
-			self.send_request
+			self.search_request
 		else
-			self.song = Song.new(response_hash["lyrics"])
+			self.song = Song.create(artist, title, response_hash["lyrics"])
 			# spinner.success("-  done.")
-
-			print "\nPress ENTER to display lyrics..."
+			print "\nPress ENTER to continue..."
 			gets
-
-			puts self.find_profanity
-			print "\n"
-			puts self.percent_profane
 		end
 	end
 
 	# returns the percentage of all words that are in the filter
 	def percent_profane
-		filter = Filter.all.map(&:word)
+		filter = Filter.get_current_filter.keys
 		expletives = @song.lyrics.split(' ').select {|word| filter.include?(word.downcase.gsub(/[[:punct:]]/,'')) }.count
 		(expletives / @song.lyrics.split(' ').count.to_f * 100).round(2).to_s+"\% of this song is profane."
 	end
 
 	#returns lyrics with profanity highlighted in red
 	def find_profanity
-		filter = Filter.all.map(&:word)
+		filter = Filter.get_current_filter.keys
 		@song.lyrics.split("\n").map {|newline|
 			newline.split(' ').map {|word| filter.include?( word.downcase.gsub(/[[:punct:]]/,'') ) ? word.colorize(:red) : word }.join(' ')
 		}

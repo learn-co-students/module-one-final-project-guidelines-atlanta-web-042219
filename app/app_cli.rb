@@ -4,7 +4,8 @@ class AppCLI
 	@@current_user = nil
 
 	def self.run
-		LoginScreen.run
+		# LoginScreen.run
+		@@current_user = User.find_by(username: "asa")
 		MainMenu.run
 	end
 

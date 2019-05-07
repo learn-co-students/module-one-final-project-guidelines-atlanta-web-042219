@@ -10,11 +10,21 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_05_07_143116) do
+ActiveRecord::Schema.define(version: 2019_05_07_154715) do
 
   create_table "filters", force: :cascade do |t|
     t.string "word"
     t.string "replacement"
+  end
+
+  create_table "song_searches", force: :cascade do |t|
+    t.string "user_id"
+    t.string "song_id"
+  end
+
+  create_table "songs", force: :cascade do |t|
+    t.string "artist"
+    t.string "lyrics"
   end
 
   create_table "users", force: :cascade do |t|
