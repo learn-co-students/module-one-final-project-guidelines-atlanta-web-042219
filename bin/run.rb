@@ -1,19 +1,17 @@
 require_relative '../config/environment'
 
-puts "Welcome Future Game of Thrones Member!"
+puts "Welcome to the Future Game of Thrones!"
 
+sleep(2)
 
-# targaryen = House.new(:name=>"Targaryen", :house_crest=>"http://assets.viewers-guide.hbo.com/larges1-houses-rgb-sigil-avatar-house-targaryen-1024x1024@2x.jpg", :year_founded=>100)
+puts "Enter your name get and ready pledge your allience!"
 
+user = gets.chomp
 
-# hotline_bling = Song.create(:name=>'Hotline Bling')
-# thriller = Song.create(:name=>'Thriller')
+puts "#{user} Whos allience will you join?"
 
-# drake = Artist.create(:name=>'Drake')
-# mj = Artist.create(:name=>'Michael Jackson')
+puts "1. Will it be House Targarian?"
+puts "2. Will it be House Lannister?"
+puts "3. Will it be House Stark?"
 
-# rap = Genre.create(:name=>'Rap')
-# pop = Genre.create(:name=>'Pop')
-
-# hotline_bling.artist = drake
-# thriller.artist = mj
+user_house = gets.chomp
