@@ -1,6 +1,10 @@
-User.delete_all
+User.destroy_all
+SongRequest.destroy_all
+Song.destroy_all
+Filter.destroy_all
+#...
 
-User.create(name: "Andrew", username: "ASAllen67", password: "123")
+User.create(name: "Andrew", username: "asa", password: "123")
 
 Filter.create(word: "arse", replacement: "butt")
 Filter.create(word: "arsehole", replacement: "butthole")
@@ -28,7 +32,7 @@ Filter.create(word: "fucked", replacement: "screwed")
 Filter.create(word: "fuckedup", replacement: "messedup")
 Filter.create(word: "fucker", replacement: "idiot")
 Filter.create(word: "fuckers", replacement: "idiots")
-Filter.create(word: "fucking", replacement: "freaking")
+Filter.create(word: "fucking", replacement: "loving")
 Filter.create(word: "fuckoff", replacement: "leave")
 Filter.create(word: "fucks", replacement: "cares")
 Filter.create(word: "fuckup", replacement: "loser")

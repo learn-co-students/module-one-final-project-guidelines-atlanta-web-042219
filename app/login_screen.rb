@@ -4,24 +4,6 @@ class LoginScreen
 		self.login_options
 	end
 
-	def self.message_delay(x)
-		sleep(x); print '.'; sleep(x); print '.'; sleep(x); print '.'; sleep(x)
-	end
-
-	def self.continue
-		print "\nPress ENTER to continue..."
-		gets
-	end
-
-	def self.login_spinner(start, pass, finish)
-		print "\n"
-		spinner = TTY::Spinner.new("[:spinner] #{start} ", format: :classic)
-		spinner.auto_spin
-		sleep 2
-		pass ? spinner.success(finish) : spinner.error(finish)
-		continue
-	end
-
 	def self.login_options
 		system('clear')
 		input = $prompt.select("~ Welcome to APP NAME ~\n",
@@ -76,5 +58,17 @@ class LoginScreen
 			AppCLI.current_user = User.create(name: name, username: username, password: password)
 			login_spinner('Creating new user profile', true, '-  success.')
 		end
+	end
+
+	def self.login_spinner(start, pass, finish)
+		print "\n"
+		
+		spinner = TTY::Spinner.new("[:spinner] #{start} ", format: :classic)
+		spinner.auto_spin
+		sleep 2
+		pass ? spinner.success(finish) : spinner.error(finish)
+
+		print "\nPress ENTER to continue..."
+		gets
 	end
 end
