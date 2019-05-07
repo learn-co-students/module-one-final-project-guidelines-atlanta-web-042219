@@ -1,17 +1,31 @@
 require_relative '../config/environment'
+prompt = TTY::Prompt.new
 
 puts "Welcome to the Future Game of Thrones!"
 
 sleep(2)
 
-puts "Enter your name get and ready pledge your allience!"
+user_name = prompt.ask('How are you called?', default: ENV['USER'])
+puts "#{user_name} Who's allience will you join?"
 
-user = gets.chomp
+user_house = prompt.select("Choose your house", ['Targarian', 'Lannister', 'Stark'])
 
-puts "#{user} Whos allience will you join?"
+# def take_alliegence
+  player_one = Allegiance.create(
+    house: user_house = 1,
+    member: user_name = 1,
+    oath: "What is Dead May Never Die",
+    oath_status: true
+)
+# end
 
-puts "1. Will it be House Targarian?"
-puts "2. Will it be House Lannister?"
-puts "3. Will it be House Stark?"
+  player_one
 
-user_house = gets.chomp
+# def take_alliegence
+#   player_one = Allegiance.create(
+#     house: "#{user_house}",
+#     member: "#{user_name}",
+#     oath: "What is Dead May Never Die",
+#     oath_status: true
+# )
+# end
