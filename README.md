@@ -1,59 +1,136 @@
-# Module One Final Project Guidelines
+## Intro to ActiveRecord
 
-Congratulations, you're at the end of module one! You've worked crazy hard to get here and have learned a ton.
+### Rake and File Structure
 
-For your final project, we'll be building a Command Line database application.
-
-## Project Requirements
-
-### Option One - Data Analytics Project
-
-1. Access a Sqlite3 Database using ActiveRecord.
-2. You should have at minimum three models including one join model. This means you must have a many-to-many relationship.
-3. You should seed your database using data that you collect either from a CSV, a website by scraping, or an API.
-4. Your models should have methods that answer interesting questions about the data. For example, if you've collected info about movie reviews, what is the most popular movie? What movie has the most reviews?
-5. You should provide a CLI to display the return values of your interesting methods.  
-6. Use good OO design patterns. You should have separate classes for your models and CLI interface.
-
-  **Resource:** [Easy Access APIs](https://github.com/learn-co-curriculum/easy-access-apis)
-
-### Option Two - Command Line CRUD App
-
-1. Access a Sqlite3 Database using ActiveRecord.
-2. You should have a minimum of three models.
-3. You should build out a CLI to give your user full CRUD ability for at least one of your resources. For example, build out a command line To-Do list. A user should be able to create a new to-do, see all todos, update a todo item, and delete a todo. Todos can be grouped into categories, so that a to-do has many categories and categories have many to-dos.
-4. Use good OO design patterns. You should have separate models for your runner and CLI interface.
-
-### Brainstorming and Proposing a Project Idea
-
-Projects need to be approved prior to launching into them, so take some time to brainstorm project options that will fulfill the requirements above.  You must have a minimum of four [user stories](https://en.wikipedia.org/wiki/User_story) to help explain how a user will interact with your app.  A user story should follow the general structure of `"As a <role>, I want <goal/desire> so that <benefit>"`. In example, if we were creating an app to randomly choose nearby restaurants on Yelp, we might write:
-
-* As a user, I want to be able to enter my name to retrieve my records
-* As a user, I want to enter a location and be given a random nearby restaurant suggestion
-* As a user, I should be able to reject a suggestion and not see that restaurant suggestion again
-* As a user, I want to be able to save to and retrieve a list of favorite restaurant suggestions
-
-## Instructions
-
-1. Fork and clone this repository.
-2. Build your application. Make sure to commit early and commit often. Commit messages should be meaningful (clearly describe what you're doing in the commit) and accurate (there should be nothing in the commit that doesn't match the description in the commit message). Good rule of thumb is to commit every 3-7 mins of actual coding time. Most of your commits should have under 15 lines of code and a 2 line commit is perfectly acceptable.
-3. Make sure to create a good README.md with a short description, install instructions, a contributors guide and a link to the license for your code.
-4. Make sure your project checks off each of the above requirements.
-5. Prepare a video demo (narration helps!) describing how a user would interact with your working project.
-    * The video should:
-      - Have an overview of your project.(2 minutes max)
-6. Prepare a presentation to follow your video.(3 minutes max)
-    * Your presentation should:
-      - Describe something you struggled to build, and show us how you ultimately implemented it in your code.
-      - Discuss 3 things you learned in the process of working on this project.
-      - Address, if anything, what you would change or add to what you have today?
-      - Present any code you would like to highlight.   
-7. *OPTIONAL, BUT RECOMMENDED*: Write a blog post about the project and process.
+- Rake
+  - We have a Rakefile that defines tasks to be run from the command line
+  - To view tasks, run `rake -T` from your terminal
+  - Tasks allow us to encapsulate ruby code that we want to execute **from the command line**
+  - We're getting some tasks from the `sinatra/activerecord/rake` library which gives us easy to use ActiveRecord tasks (we can see this included in our gemfile)
+  ***
+- File structure
+  - Gemfile––what is a gemfile? Why on earth would we want to use one?
+  - `app` folder holds our models––our Ruby classes
+  - `db` directory holds migrations and seeds.rb file––what are our seeds?
+  - `config` holds environment file
+    - `require 'bundler'` and `Bundler.require` **load all of the gems in our Gemfile**
+    - `ActiveRecord::Base.establish_connection` **sets up our database** (with options hash)
+    - `require_all` **loads all of our application code**
 
 ---
-### Common Questions:
-- How do I turn off my SQL logger?
+
+### Migrations and Database Structure
+
+- we want to create our first model \(ruby class + sql table\)––how to we bridge the gap between sql data and our ruby classes?
+- What is a model? Our Ruby Class
+- What is a migration? Some ruby code that alters our schema
+- What is a schema? The structure of our database
+- to get our database set up, we need to use the `rake db:create_migration NAME=create_animals`
+- check out the migrations in the `db/migrations` folder
+
+  - what is the sequence of numbers in the beginning of the file name? It's a time stamp that identifies our migrations. We need these migrations to run in the order in which they were created.
+  - What are the `change`, `up`, and `down` methods in migrations? These ActiveRecord methods allow us to alter our db schema.
+
+- `create_table` method which takes a block, the block takes a table builder
+
+  - why do we use the `t` variable?
+  - `t.string :name` what is the `string` method declaring? This table will have a property called name that is a string
+
+  ***
+
+- run migrations `rake db:migrate`
+
+  - Our `schema.rb` which is the **authoritative representation of the database structure**
+  - look at the `version` argument in the schema to see if it matches with the last successful migration timestamp. **These should match if your migration succeeded**
+
+  ***
+
+- migration conventions
+
+  - **file name and class name must match up exactly, but in different case**––for example `TIMESTAMP_create_zoo.rb` our db table is pluralized `zoos` and our model (Ruby class) is singular
+
+    ```ruby
+    class Zoo < ActiveRecord::Base
+    end
+    ```
+
+  - create_table block argument is usually a `t`
+
+- blowing up the database (DO NOT DO IN REAL LIFE)
+  - delete db
+  - delete schema.rb
+  - !!! don't do this, just in this module, and don't do it if you can't easily get your data back
+  - instead, use `rake db:rollback`
+  ***
+- gracefully fixing the db
+  - create a new migration
+  - roll that migration back
+  - delete the migration files you don't want to keep
+- we don't need to create migration files by hand anymore! 😍THX ACTIVERECORD😍
+
+### Connecting Models to ActiveRecord
+
+- Our models (Ruby classes) appear in `app/models`
+  - **MAJOR KEY 🔑** convention is to have the model class name singular and the sql table plural––
+  ```ruby
+  class Zoo < ActiveRecord::Base
+  end
+  ```
+  but the table is called `zoos`
+- Since our Ruby classes inherit from ActiveRecord, we have access to AR methods
+
+  - We can use `Zoo.create(name: 'Atlanta')` to both **save our zoo to the db** and **create a ruby object with that same data**
+  - How do we suddenly know which attributes our zoo is supposed to have?
+
+- An animal belongs to a zoo, so we need to create it with an zoo_id: `Animal.create(name: 'walrus', zoo_id: 1)`
+
+- How can we associate an animal with a zoo and vice-versa?
+
 ```ruby
-# in config/environment.rb add this line:
-ActiveRecord::Base.logger = nil
+class Animal < ActiveRecord::Base
+  def zoo
+    # Zoo.all.find{ |z| z.id == self.zoo_id }
+    # OR use AR .find
+    Zoo.find(self.zoo_id)
+  end
+end
+#...
+class Zoo < ActiveRecord::Base
+  def animals
+    # Animal.all.select{|a| a.zoo_id == self.id}
+    # OR use AR .where
+    Animal.where(zoo_id: self.id)
+  end
+end
 ```
+
+## What About a Better Way™️
+
+- ActiveRecord Macros
+  - Animal model: `belongs_to :zoo`
+  - Zoo model `has_many :animals`
+- These macros provide **even more** methods, like `animal_instance.zoo` and `zoo_instance.animals`
+  - **Major Key🔑**––since a animal belongs_to a zoo it should have ONE zoo. Therefore the method is `.zoo`. A zoo HAS MANY animalls, therefore the method
+  is `.animals` pay attention to what is singular and what is plural.
+
+### Important Methods from ActiveRecord
+
+- Model.new
+  - creates a new **RUBY** instance in local memory without persisting to the database
+- Model\#save
+  - inserts or updates a **RUBY** instance to the db
+- Model.create
+  - Model.new + Model\#save
+  - A class method that creates a new **RUBY** instance AND saves it to the database
+- Model.all
+  - returns all instances (we wrote this by hand a million times)
+- Model.first
+  - instance with the lowest ID in the db
+- Model.find
+  - Finds a record by id and returns a Ruby instance––`Animal.find(1)` returns the animal with an id of 1
+- Model.find_by\({ attribute: value }\)
+  - can find by one attribute-value pair or multiple
+  - `Animal.find_by(name: 'Platypus')` will return the Animal with a name of 'Platypus')
+- Model.where\({ attribute: value }\)
+
+[Active Record Docs](http://edgeguides.rubyonrails.org/active_record_migrations.html#using-the-up-down-methods)
