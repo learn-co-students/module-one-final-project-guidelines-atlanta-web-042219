@@ -4,7 +4,7 @@ class AppCLI
 	@@current_user = nil
 
 	def self.run
-		# LoginScreen.run
+		LoginScreen.run
 		MainMenu.run
 	end
 
