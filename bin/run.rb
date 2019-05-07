@@ -1,5 +1,3 @@
 require_relative '../config/environment'
 
-
-
-puts "HELLO WORLD"
+puts "Welcome Future Game of Thrones Member!"
