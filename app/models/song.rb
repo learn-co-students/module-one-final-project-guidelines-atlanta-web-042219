@@ -1,3 +1,3 @@
 class Song < ActiveRecord::Base
-	has_many :songrequests
+	has_many :searches
 end

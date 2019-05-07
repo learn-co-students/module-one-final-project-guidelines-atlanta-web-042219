@@ -1,7 +1,7 @@
-# User.destroy_all
-# SongRequest.destroy_all
-# Song.destroy_all
-# Filter.destroy_all
+User.destroy_all
+Search.destroy_all
+Song.destroy_all
+Filter.destroy_all
 
 #...
 

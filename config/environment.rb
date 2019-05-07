@@ -12,6 +12,6 @@ ActiveRecord::Base.establish_connection(
   database: 'db/development.sqlite'
 )
 
-#we can copy/paste this into pry to see the SQL code that is being executed when we use ActiveRecord methods.
+# enable / disable logger
 # ActiveRecord::Base.logger = Logger.new(STDOUT)
 ActiveRecord::Base.logger = nil

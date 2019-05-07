@@ -68,7 +68,7 @@ class LoginScreen
 		sleep 2
 		pass ? spinner.success(finish) : spinner.error(finish)
 
-		print "\nPress ENTER to continue..."
+		print "\nPress ENTER to continue...".colorize(:green)
 		gets
 	end
 end

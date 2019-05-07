@@ -72,8 +72,7 @@ class MainMenu
 
 	def self.recent_searches
 		system('clear')
-		binding.pry
-		options = AppCLI.current_user.searches.map{|ss| ss.song.title+" - by "+ss.song.artist}
+		options = AppCLI.current_user.searches.map{|search| puts search }
 		input = $prompt.select(%Q[#{AppCLI.current_user.username}'s recent searches:\n], options)
 	end
 
