@@ -2,7 +2,7 @@ class SongSearch < ActiveRecord::Base
 	belongs_to :user
 	belongs_to :song
 
-	def search_request(artist, song)
+	def search_request(artist, title)
 		# print "\n"
 		# spinner = TTY::Spinner.new("[:spinner] Searching for your song ", format: :dots)
 		# spinner.auto_spin
@@ -20,8 +20,10 @@ class SongSearch < ActiveRecord::Base
 
 			self.search_request
 		else
-			self.song = Song.create(artist, title, response_hash["lyrics"])
+			Song.create(artist: artist, title: title, lyrics: response_hash["lyrics"])
+			self.song_id = Song.all.last.id
 			# spinner.success("-  done.")
+			binding.pry
 			print "\nPress ENTER to continue..."
 			gets
 		end
