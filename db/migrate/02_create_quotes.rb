@@ -5,8 +5,6 @@ class CreateQuotes < ActiveRecord::Migration
       q.string :user
       q.integer :date
       q.string :quote_text
-
-
     end
   end
 end

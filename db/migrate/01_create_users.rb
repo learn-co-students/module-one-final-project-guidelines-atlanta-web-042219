@@ -4,6 +4,4 @@ class CreateUsers < ActiveRecord::Migration
       t.string :name
     end
   end
-
-
 end
