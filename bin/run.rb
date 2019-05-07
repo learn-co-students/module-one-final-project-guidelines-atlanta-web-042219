@@ -1,8 +1,9 @@
 require_relative '../config/environment'
 
-puts "HELLO WORLD"
+puts "Welcome Future Game of Thrones Member!"
 
-targaryen = House.new(:name=>"Targaryen", :house_crest=>"http://assets.viewers-guide.hbo.com/larges1-houses-rgb-sigil-avatar-house-targaryen-1024x1024@2x.jpg", :year_founded=>100)
+
+# targaryen = House.new(:name=>"Targaryen", :house_crest=>"http://assets.viewers-guide.hbo.com/larges1-houses-rgb-sigil-avatar-house-targaryen-1024x1024@2x.jpg", :year_founded=>100)
 
 
 # hotline_bling = Song.create(:name=>'Hotline Bling')
