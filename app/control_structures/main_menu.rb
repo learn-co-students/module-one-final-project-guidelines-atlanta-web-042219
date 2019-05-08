@@ -79,18 +79,25 @@ class MainMenu
 	def self.recent_searches
 		system('clear')
 		$user = User.find($user.id)
-
+		options = []
 		if $user.searches.count == 0
 			prompt_message = %Q[ #{$user.displayname} has not made any searches recently.\n]
 		else
 			options = $user.searches.map{|search| %Q["#{search.song.title}" by #{search.song.artist}] }.reverse
-			options << 'Return to main menu'
+			options << 'Clear my recent searches'
 			prompt_message = %Q[ #{$user.displayname}'s recent searches:\n]
 		end
-
+		options << 'Return to main menu'
+		
 		input = $prompt.select(prompt_message, options)
-
-		if input == 'Return to main menu'
+		
+		if input == 'Clear my recent searches'
+			$user.searches.destroy_all
+			puts "\n Your searches have been cleared."
+			print $continue_text
+			gets
+			self.recent_searches
+		elsif input == 'Return to main menu'
 			self.main_menu
 		else
 			input = input.gsub(/[[:punct:]]/,'').split(' by ')
