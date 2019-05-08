@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190508133844) do
+ActiveRecord::Schema.define(version: 20190508213426) do
 
   create_table "allegiances", force: :cascade do |t|
     t.integer "house_id"
@@ -19,14 +19,16 @@ ActiveRecord::Schema.define(version: 20190508133844) do
   end
 
   create_table "houses", force: :cascade do |t|
-    t.string "name"
-    t.text   "house_crest"
-    t.string "oath"
+    t.string  "name"
+    t.text    "house_crest"
+    t.string  "oath"
+    t.integer "power"
   end
 
   create_table "members", force: :cascade do |t|
-    t.string "name"
-    t.string "life_status"
+    t.string  "name"
+    t.string  "life_status"
+    t.integer "power"
   end
 
 end
