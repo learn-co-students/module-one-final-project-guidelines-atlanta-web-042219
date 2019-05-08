@@ -74,6 +74,7 @@ class Login
 			self.new_user
 		else
 			$user = User.create(name: name, username: username.downcase, displayname: username, password: password)
+			Default_Filters.run($user.id)
 			login_spinner('Creating new user profile', true, '-  '+'Success.'.colorize(:green))
 			print $continue_text
 			gets
