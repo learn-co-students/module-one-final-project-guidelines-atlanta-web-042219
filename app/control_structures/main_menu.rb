@@ -80,6 +80,7 @@ class MainMenu
 		system('clear')
 		$user = User.find($user.id)
 		options = []
+		
 		if $user.searches.count == 0
 			prompt_message = %Q[ #{$user.displayname} has not made any searches recently.\n]
 		else
@@ -90,7 +91,7 @@ class MainMenu
 		options << 'Return to main menu'
 		
 		input = $prompt.select(prompt_message, options)
-		
+
 		if input == 'Clear my recent searches'
 			$user.searches.destroy_all
 			puts "\n Your searches have been cleared."
