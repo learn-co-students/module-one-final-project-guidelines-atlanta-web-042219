@@ -6,9 +6,10 @@ class Login
 
 	def self.login_options
 		system('clear')
+		print "\n"+$ascii_art+"\n"
 		$user = nil
 		$search = nil
-		input = $prompt.select(" ~ Welcome to Clean.ly ~\n",
+		input = $prompt.select('',
 			['Existing user',
 			 'Create new user',
 			 'Exit'
