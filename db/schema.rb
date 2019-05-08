@@ -18,8 +18,8 @@ ActiveRecord::Schema.define(version: 2019_05_07_000004) do
   end
 
   create_table "searches", force: :cascade do |t|
-    t.string "user_id"
-    t.string "song_id"
+    t.integer "user_id"
+    t.integer "song_id"
   end
 
   create_table "songs", force: :cascade do |t|
@@ -31,6 +31,7 @@ ActiveRecord::Schema.define(version: 2019_05_07_000004) do
   create_table "users", force: :cascade do |t|
     t.string "name"
     t.string "username"
+    t.string "displayname"
     t.string "password"
   end
 

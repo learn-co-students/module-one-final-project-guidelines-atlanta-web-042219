@@ -1,18 +1,10 @@
 class AppCLI
-	$prompt  = TTY::Prompt.new
-	@@current_user = nil
 
 	def self.run
-		# LoginScreen.run
-		@@current_user = User.find_by(username: "asa")
-		MainMenu.run
-	end
+		Login.run
 
-	def self.current_user=(user)
-		@@current_user = user
-	end
-
-	def self.current_user
-		@@current_user
+		# for testing purposes
+		# $user = User.find_by(username: "dev")
+		# MainMenu.run
 	end
 end
