@@ -28,7 +28,7 @@ class AppCLI
       else
         puts "Not an option. Try Again"
     end
-
+    $checkpoint = 1
     level_one
   end
 
@@ -41,7 +41,7 @@ class AppCLI
         puts "You defeated the Night King!"
       else @new_user.life_status = "Dead"
         puts "The Night King killed you, and you're now part of the undead army."
-        exit
+        die($checkpoint)
       end
     level_two
   end
@@ -55,8 +55,10 @@ class AppCLI
         puts "You saved Lysa and the real traitor, LittleFinger, has fallen through the moon door!"
       else @new_user.life_status = "Dead"
         puts "Look you can FLY!! HAHHAHAHA!!!"
-        exit
+        die($checkpoint)
       end
+      puts "checkpoint reached!"
+      $checkpoint = 3
       level_three
   end
 
@@ -69,7 +71,7 @@ class AppCLI
         puts "Where are the Freys?"
       else @new_user.life_status = "Dead"
         puts "YOU KILLED THE STARKS!!! SHAME, SHAME, SHAME"
-        exit
+        die($checkpoint)
       end
       level_four
   end
@@ -83,7 +85,7 @@ class AppCLI
         puts "The purple wedding was a beautiful affair."
       else @user_name.life_status = "Dead"
         puts "Joffery lives and He wants to play with you."
-        exit
+        die($checkpoint)
       end
     level_five
   end
@@ -98,7 +100,7 @@ class AppCLI
         puts "Head to the Stormlands, Cersi's head is almost yours."
       else @user_name.life_status = "Dead"
         puts "What is dead, will stay dead when it comes to you! Thanks for playing."
-        exit
+        die($checkpoint)
       end
       level_six
   end
@@ -112,13 +114,13 @@ class AppCLI
         puts "At Dawn leave for King's Landing and Claim Your Throne...if you can Beat Cersi"
       else
         puts "NOOOOO, So close!"
-        exit
+        die($checkpoint)
       end
       level_seven
   end
 
   def level_seven
-    
+
   end
 
   def create_new_member
@@ -134,6 +136,20 @@ class AppCLI
       if @user_house == house.name
          puts "#{@user_name.capitalize} you picked #{house.name}! your oath is #{house.oath}!"
        end
+    end
+  end
+
+  def die(checkpoint)
+    # system("clear")
+    puts "restoring checkpoint...\n Press ENTER to continue..."
+    gets
+    case checkpoint
+    when 1
+      self.level_one
+    when 3
+      self.level_three
+    when 5
+      self.level_five
     end
   end
 
