@@ -46,6 +46,5 @@ robert = Member.create(
 ally1 = Allegiance.create(
   house_id: 1,
   member_id: 1,
-  oath: "For the north!",
   oath_status: true
 )

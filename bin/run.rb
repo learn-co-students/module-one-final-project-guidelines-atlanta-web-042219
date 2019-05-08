@@ -35,7 +35,6 @@ user_name.no
 #   player_one = Allegiance.create(
 #     house_id: user_house = 1,
 #     member_id: user_name = 1,
-#     oath: "What is Dead May Never Die",
 #     oath_status: true
 # )
 # end
@@ -46,7 +45,6 @@ user_name.no
 #   player_one = Allegiance.create(
 #     house: "#{user_house}",
 #     member: "#{user_name}",
-#     oath: "What is Dead May Never Die",
 #     oath_status: true
 # )
 # end
