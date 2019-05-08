@@ -15,7 +15,7 @@ stark = House.create(
   house_crest: "https://vignette.wikia.nocookie.net/gameofthrones/images/8/8a/House-Stark-Main-Shield.PNG/revision/latest?cb=20170101103142",
   oath: "Winter is Coming"
 )
-lannister = House.creat(
+lannister = House.create(
   name: "House Lannister",
   house_crest: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQktGBMO6TTXC6W4LANKuvb94JKrZS3WXx_c4l72FpGYA8MydNCwg",
   oath: "A Lannister always pays his debts!"
@@ -45,8 +45,18 @@ robert = Member.create(
   life_status: "Dead"
 )
 
-ally1 = Allegiance.create(
-  house_id: 1,
-  member_id: 1,
+player_one = Allegiance.create(
+  house_id: targaryen.id,
+  member_id: maryam.id,
+  oath_status: true
+)
+player_two = Allegiance.create(
+  house_id: stark.id,
+  member_id: preston.id,
+  oath_status: true
+)
+player_three = Allegiance.create(
+  house_id: lannister.id,
+  member_id: robert.id,
   oath_status: true
 )
