@@ -2,7 +2,7 @@ class Search < ActiveRecord::Base
 	belongs_to :user
 	belongs_to :song
 
-	def self.api_request(artist, title)
+	def self.api_request(artist="", title="")
 		print "\n"
 		spinner = TTY::Spinner.new("[:spinner] Searching for your song ", format: :dots, error_mark: '✖'.colorize(:red), success_mark: '✔'.colorize(:green))
 		spinner.auto_spin
@@ -23,14 +23,25 @@ class Search < ActiveRecord::Base
 			print $continue_text
 			gets
 		else
-			response = RestClient.get(%Q[api.lyrics.ovh/v1/#{artist.gsub(' ','%20')}/#{title.gsub(' ','%20')}])
-			song_lyrics = JSON.parse(response)["lyrics"]
+			# response = RestClient.get(%Q[api.lyrics.ovh/v1/#{artist.gsub(' ','%20')}/#{title.gsub(' ','%20')}], timeout: 10)
+			response = nil
+			begin
+				response = RestClient::Request.execute(
+					:url => %Q[api.lyrics.ovh/v1/#{artist.gsub(' ','%20')}/#{title.gsub(' ','%20')}],
+					:method => :get, 
+					:timeout => 4, 
+					:opentimeout => 4)
+			rescue RestClient::Exceptions::ReadTimeout
+			rescue RestClient::Exceptions::OpenTimeout
+			end
+
+			response == nil ? song_lyrics = "" : song_lyrics = JSON.parse(response)["lyrics"]
 
 			if song_lyrics.length == 0
 				spinner.error("-  "+"ERROR: our API can't find that song!".colorize(:red))
 				print "\nPress "+"ENTER".colorize(:green)+" to try again..."
 				gets
-				self.api_request(artist, title)
+				MainMenu.new_search
 			else
 				$search = Search.create(user_id: $user.id, song_id: Song.create(artist: artist, title: title, lyrics: song_lyrics).id)
 				spinner.success('-  '+'Found it.'.colorize(:green))

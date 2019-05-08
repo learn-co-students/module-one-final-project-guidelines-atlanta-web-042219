@@ -4,7 +4,7 @@ Song.destroy_all
 Filter.destroy_all
 #...
 
-User.create(name: "Developer", username: "dev", displayname: "Test Mode", password: "123")
+User.create(name: "Developer", username: "", displayname: "Test Mode", password: "")
 
 Filter.create(word: "arse", replacement: "butt")
 Filter.create(word: "arsehole", replacement: "butthole")

@@ -26,8 +26,11 @@ class Login
 	def self.existing_user
 		system('clear')
 		puts $back_msg
-		username = $prompt.ask (' Username -')
-		password = $prompt.mask(' Password -')
+		username  = $prompt.ask (' Username -')
+		password  = $prompt.mask(' Password -')
+		
+		username||= ''
+		password||= ''
 
 		if username == 'back' || password == 'back'
 			self.login_options
@@ -51,9 +54,13 @@ class Login
 	def self.new_user
 		system('clear')
 		puts $back_msg
-		name     = $prompt.ask (' Name     -')
-		username = $prompt.ask (' Username -')
-		password = $prompt.mask(' Password -')
+		name      = $prompt.ask (' Name     -')
+		username  = $prompt.ask (' Username -')
+		password  = $prompt.mask(' Password -')
+
+		name    ||= ''
+		username||= ''
+		password||= ''
 		
 		if name == 'back' || username == 'back' || password == 'back'
 			self.login_options
