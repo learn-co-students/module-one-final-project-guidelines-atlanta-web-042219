@@ -10,24 +10,22 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 3) do
+ActiveRecord::Schema.define(version: 20190508133844) do
 
   create_table "allegiances", force: :cascade do |t|
     t.integer "house_id"
     t.integer "member_id"
-    t.string  "oath"
     t.boolean "oath_status"
   end
 
   create_table "houses", force: :cascade do |t|
-    t.string  "name"
-    t.text    "house_crest"
-    t.integer "year_founded"
+    t.string "name"
+    t.text   "house_crest"
+    t.string "oath"
   end
 
   create_table "members", force: :cascade do |t|
     t.string "name"
-    t.string "hometown"
     t.string "life_status"
   end
 
