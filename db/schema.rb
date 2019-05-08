@@ -15,6 +15,7 @@ ActiveRecord::Schema.define(version: 2019_05_07_000004) do
   create_table "filters", force: :cascade do |t|
     t.string "word"
     t.string "replacement"
+    t.integer "user_id"
   end
 
   create_table "searches", force: :cascade do |t|

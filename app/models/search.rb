@@ -29,8 +29,8 @@ class Search < ActiveRecord::Base
 				response = RestClient::Request.execute(
 					:url => %Q[api.lyrics.ovh/v1/#{artist.gsub(' ','%20')}/#{title.gsub(' ','%20')}],
 					:method => :get, 
-					:timeout => 4, 
-					:opentimeout => 4)
+					:timeout => 7, 
+					:opentimeout => 7)
 			rescue RestClient::Exceptions::ReadTimeout
 			rescue RestClient::Exceptions::OpenTimeout
 			end

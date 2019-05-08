@@ -109,6 +109,7 @@ class MainMenu
 
 	def self.edit_filter
 		system('clear')
+		$user = User.find($user.id)
 		puts %Q[ Enter a new 'bad word' you want to filter and a replacement for it.\n #{$back_msg}]
 		bad_word         = $prompt.ask (' Bad Word    -')
 		replacement_word = $prompt.ask (' Replacement -')
@@ -119,16 +120,17 @@ class MainMenu
 			exit
 
 		else
-			filter_check = Filter.find_by(word: bad_word)
+			filter_check = Filter.find_by(word: bad_word, user_id: $user.id)
 
 			if filter_check == nil
-				Filter.create(word: bad_word, replacement: replacement_word)
+				Filter.create(word: bad_word, replacement: replacement_word, user_id: $user.id)
 					puts %Q[\n "#{bad_word}"].colorize(:red) + %Q[ will now be replaced with ] + %Q["#{replacement_word}"].colorize(:cyan)
 			else
 				input = $prompt.select("\n That filter already exists. What do you want to do with it?\n", ['Update it', 'Delete it', 'Oh, nevermind'])
 				case input
 				when 'Update it'
 					filter_check.replacement = replacement_word
+					filter_check.save
 					puts %Q[\n "#{bad_word}"].colorize(:red) + %Q[ will now be replaced with ] + %Q["#{replacement_word}"].colorize(:cyan)
 				when 'Delete it'
 					filter_check.destroy
