@@ -19,3 +19,17 @@ def add_allegiance
 #     puts "Not an option"
 #   end
 # end
+
+def add_allegiance
+#   player = Allegiance.create()
+#     player.house_id = stark.id
+#     player.member_id = @@user_name.id
+#     player.oath = stark.id
+# end
+
+def player_one
+#   player = Allegiance.create()
+#   player.house_id = targaryen.id
+#   player.member_id = @user_name.id
+#   player.oath = targaryen.oath
+# end

@@ -11,15 +11,16 @@ class AppCLI
     puts "Create your name."
       @user_name = gets.chomp
       sleep(1)
-    puts "2nd Pick your House"
-    @user_house = @@prompt.select("Choose your house", ["House Stark", "House Targaryen", "House Lannister"])
 
-    case @user_name
-      when @user_name
-        create_new_member
-      else
-        puts "Invalid Entry. Try Again"
-    end
+      case @user_name
+        when @user_name
+          create_new_member
+        else
+          puts "Invalid Entry. Try Again"
+      end
+
+    puts "Where does your allegiance lye"
+    @user_house = @@prompt.select("Choose your house", ["House Stark", "House Targaryen", "House Lannister"])
 
     case @user_house
       when @user_house
@@ -27,6 +28,15 @@ class AppCLI
       else
         puts "Not an option. Try Again"
     end
+
+    level_one
+  end
+
+  def level_one
+    puts "Welcome #{@user_name.capitalize} to The North, Land of the Starks"
+    sleep(1)
+    puts "Your Mission: Kill the White Walker King!"
+    @@prompt.select("Pick your weapon", ["Valyrian Steel", "Dragon Fire", "Steak Through the Heart", "Dragon Glass"])
   end
 
   def create_new_member
@@ -44,4 +54,5 @@ class AppCLI
        end
     end
   end
+
 end
