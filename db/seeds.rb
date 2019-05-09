@@ -9,19 +9,19 @@ targaryen = House.create(
   name: "House Targaryen",
   house_crest: "http://assets.viewers-guide.hbo.com/larges1-houses-rgb-sigil-avatar-house-targaryen-1024x1024@2x.jpg",
   oath: "Fire and Blood",
-  power: 500
+  power: 1
 )
 stark = House.create(
   name: "House Stark",
   house_crest: "https://vignette.wikia.nocookie.net/gameofthrones/images/8/8a/House-Stark-Main-Shield.PNG/revision/latest?cb=20170101103142",
   oath: "Winter is Coming",
-  power: 5000
+  power: 1
 )
 lannister = House.create(
   name: "House Lannister",
   house_crest: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQktGBMO6TTXC6W4LANKuvb94JKrZS3WXx_c4l72FpGYA8MydNCwg",
   oath: "A Lannister always pays his debts!",
-  power: 10000
+  power: 1
 )
 # greyjoy = House.create(
 #   name: "House Greyjoy",

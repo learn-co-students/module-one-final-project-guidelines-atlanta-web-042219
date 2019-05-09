@@ -30,7 +30,6 @@ class AppCLI
     end
     $checkpoint = 1
     level_one
-    # level_seven_battle_scene
   end
 
   def level_one
@@ -103,7 +102,7 @@ class AppCLI
     response = gets.chomp
       if response.downcase == "but rises again harder and stronger"
         puts "Head to the Stormlands, Cersi's head is almost yours."
-      else @new_name.life_status = "Dead"
+      else @new_user.life_status = "Dead"
         puts "What is dead, will stay dead when it comes to you! Thanks for playing."
         die($checkpoint)
       end
@@ -131,7 +130,44 @@ class AppCLI
     sleep(1)
     puts "Get ready... Attack House Lannister!"
 
-    battle_house_scene
+
+    lannister_house = rand(1..5)
+
+    army = @@prompt.select("Choose your ARMY!!!", ["The Dothraki Army", "The Wildlings Army", "The Unsullied Army", "The Golden Company Army"])
+
+    battle_house = House.where(name: @user_house)
+
+      battle_house.map do |house|
+      if @user_house == house.name && army == "The Dothraki Army" 
+        house.power += rand(1..50)
+        house.power > lannister_house
+          puts "your house power increased to #{house.power} and you defeated the Lannister army. You'll now battle Cersi."
+
+      elsif @user_house == house.name && army == "The Wildlings Army"
+        house.power += rand(1..1000)
+        house.power > lannister_house
+          puts "Your army of Wildlings crushed the Lannisters. You'll now battle Cersi."
+          puts "your house power increased to #{house.power} and you defeated the Lannister army"
+
+      elsif @user_house == house.name && army == "The Unsullied Army"
+        house.power += rand(1..500)
+        puts "Your house power increased to #{house.power}. Your army of Unsullied speared every Lannister in sight! You'll now battle Cersi."
+      elsif @user_house == house.name && army == "The Golden Company Army"
+        house.power -= rand(1..10)
+        puts "The Golden Company has betrayed you, and you will now die."
+        puts "The Lannisters crushed your army. You will suffer under Cersi!"
+        exit
+      end
+    end
+
+    level_eight
+  end
+
+  def level_eight
+    puts "You made it to the Red Keep and will battle Cersi for the throne."
+    fight = @@prompt.select("What will you use to kill Queen Cersi?", ["White Walker's Ice Blade", "The Nightfall", "Crossbow"])
+    battle_cersi
+
   end
 
   def create_new_member
@@ -142,36 +178,14 @@ class AppCLI
       puts "Hi #{@new_user.name}! Welecome to level one you're currently #{@new_user.life_status} with a power level of #{@new_user.power}"
   end
 
-  def battle_house_scene
-    lannister_house = rand(1..10000)
-
-    army = @@prompt.select("Choose your ARMY!!!", ["The Dothraki Army", "The Wildlings Army", "The Unsullied Army", "The Golden Company Army"])
-
-    battle_house = House.where(name: @user_house)
-
-      battle_house.map do |house|
-      if @user_house == house.name && army == "The Dothraki Army" && house.power > lannister_house
-        house.power += rand(1..1000)
-        puts "your house power increased to #{house.power}"
-
-      elsif @user_house == house.name && army == "The Wildlings Army" && house.power > lannister_house
-        house.power -= rand(1..1000)
-        puts "The Wildlings abandoned your army before the siege your house power is #{house.power}"
-
-      elsif @user_house == house.name && army == "The Unsullied Army" && house.power > lannister_house
-        house.power += rand(1..1000)
-        puts "Your army The Unsullied have conquered the Lannister House!"
-
-      elsif @user_house == house.name && army == "The Golden Company Army" && house.power > lannister_house
-        house.power -= rand(1..1000)
-        puts "The Golden Company has betrayed and you will now die."
-
-      else @user_house == house.name && house.power < lannister_house
-        puts "The lannisters crushed your army. You will suffer under Cersi!"
-
-        end
-      end
-  end
+  def battle_cersi
+    cersi_power = rand(1..700)
+    if @new_user.power > cersi_power
+      puts "You defeat Queen Cersi! Take your seat on the iron throne!"
+    else 
+      puts "Queen Cersi will rule the seven kingdoms F O R E V E R "
+    end
+  end 
 
   def picked_house
     House.all.find do |house|
