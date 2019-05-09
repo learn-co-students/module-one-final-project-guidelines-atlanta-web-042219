@@ -70,7 +70,7 @@ class Login
 
 		elsif User.find_by(username: username.downcase) == nil
 			$user = User.create(name: name, username: username.downcase, displayname: username, password: password)
-			Filters.set_default_filters($user.id)
+			Filter.set_default_filters($user.id)
 			login_spinner('Creating new user profile', true, '-  '+'Success.'.colorize(:green))
 			print $continue_text
 			gets
