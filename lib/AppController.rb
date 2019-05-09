@@ -12,7 +12,18 @@ class AppController
         puts "Welcome to literally the best app ever!"
         prompt = TTY::Prompt.new(active_color: :cyan)
         name = prompt.ask("What's your name?")
-        puts "Hello #{name}"
+        if User.find_by(name: name) == nil
+            User.create(name: name)
+            puts "*********************"
+            puts "Hello #{name}"
+            puts "*********************"
+        else
+            puts "*********************"
+            puts "Welcome back #{name}"
+            puts "*********************"
+        end
+        
+        
     end
 
     def main_menu
