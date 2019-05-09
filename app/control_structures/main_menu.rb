@@ -50,7 +50,7 @@ class MainMenu
 			])
 		case input
 		when 'Print lyrics'
-			print "\n"+$search.find_profanity
+			$search.find_profanity
 			print $return_text
 			gets
 			self.song_menu
@@ -101,7 +101,8 @@ class MainMenu
 		elsif input == 'Return to main menu'
 			self.main_menu
 		else
-			input = input.gsub(/[[:punct:]]/,'').split(' by ')
+			input = input.gsub(%q["],'').split(' by ')
+			binding.pry
 			$search = Search.find_by(user_id: $user.id, song_id: Song.find_by(title: input[0], artist: input[1]).id)
 			self.song_menu
 		end

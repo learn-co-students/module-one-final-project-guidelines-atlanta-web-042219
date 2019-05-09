@@ -59,15 +59,27 @@ class Search < ActiveRecord::Base
 	#returns lyrics with profanity highlighted in red
 	def find_profanity
 		filter = Filter.get_current_filter.keys
-		self.song.lyrics.split("\n").map {|newline|
-			newline.split(' ').map {|word| filter.include?( word.downcase.gsub(/[[:punct:]]/,'') ) ? word.colorize(:red) : word }.join(' ')
+		print "\n"+self.song.lyrics.split("\n").map {|newline|
+			newline.split(' ').map {|word|
+				temp = word.downcase.gsub(/[[:punct:]]/,'')
+				filter.include?(temp) || filter.include?(temp.singularize) ? word.colorize(:red) : word
+			}.join(' ')		
 		}.join("\n")
 	end
 
 	def filter_profanity
 		filter = Filter.get_current_filter
 		print "\n"+self.song.lyrics.split("\n").map {|newline|
-			newline.split(' ').map {|word| filter.include?( word.downcase.gsub(/[[:punct:]]/,'') ) ? filter[word.downcase.gsub(/[[:punct:]]/,'')].colorize(:cyan) : word }.join(' ')
+			newline.split(' ').map {|word|
+				temp = word.downcase.gsub(/[[:punct:]]/,'')
+				if filter.include?(temp)
+					filter[temp].colorize(:cyan)
+				elsif filter.include?(temp.singularize)
+					filter[temp].pluralize.colorize(:cyan)
+				else
+					word
+				end
+			}.join(' ')
 		}.join("\n")
 	end
 
