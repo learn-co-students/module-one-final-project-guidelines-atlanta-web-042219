@@ -23,7 +23,6 @@ class Search < ActiveRecord::Base
 			print $continue_text
 			gets
 		else
-			# response = RestClient.get(%Q[api.lyrics.ovh/v1/#{artist.gsub(' ','%20')}/#{title.gsub(' ','%20')}], timeout: 10)
 			response = nil
 			begin
 				response = RestClient::Request.execute(
@@ -67,7 +66,7 @@ class Search < ActiveRecord::Base
 
 	def filter_profanity
 		filter = Filter.get_current_filter
-		self.song.lyrics.split("\n").map {|newline|
+		print "\n"+self.song.lyrics.split("\n").map {|newline|
 			newline.split(' ').map {|word| filter.include?( word.downcase.gsub(/[[:punct:]]/,'') ) ? filter[word.downcase.gsub(/[[:punct:]]/,'')].colorize(:cyan) : word }.join(' ')
 		}.join("\n")
 	end
@@ -84,7 +83,7 @@ class Search < ActiveRecord::Base
 			puts " Parental rating: "+"PG-13".colorize(:green)
 		elsif percent < 15
 			puts " Parental rating: "+"R".colorize(:red)
-		else
+		else #percent greater than 14
 			puts " This song is so profane we don't even have a rating for it."
 		end
 		print " "+(percent.round(2).to_s+"\%").colorize(:cyan)+" of this song's lyrics are profane."

@@ -68,18 +68,19 @@ class Login
 		elsif name == 'exit' || username == 'exit' || password == 'exit'
 			exit
 
-		elsif User.find_by(username: username.downcase) != nil
-			login_spinner('Creating new user profile', false, '-  '+'That username is taken.'.colorize(:red))
-			print $try_again_text
-			gets
-			self.new_user
-		else
+		elsif User.find_by(username: username.downcase) == nil
 			$user = User.create(name: name, username: username.downcase, displayname: username, password: password)
 			Default_Filters.run($user.id)
 			login_spinner('Creating new user profile', true, '-  '+'Success.'.colorize(:green))
 			print $continue_text
 			gets
 			MainMenu.run
+
+		else
+			login_spinner('Creating new user profile', false, '-  '+'That username is taken.'.colorize(:red))
+			print $try_again_text
+			gets
+			self.new_user
 		end
 	end
 

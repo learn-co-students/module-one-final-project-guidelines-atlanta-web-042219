@@ -66,7 +66,7 @@ class MainMenu
 				gets
 				self.song_menu
 			else
-				print "\n"+$search.filter_profanity
+				$search.filter_profanity
 				print $return_text
 				gets
 				self.song_menu
