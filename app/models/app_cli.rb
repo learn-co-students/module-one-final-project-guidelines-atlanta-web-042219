@@ -30,6 +30,7 @@ class AppCLI
     end
     $checkpoint = 1
     level_one
+    # level_seven_battle_scene
   end
 
   def level_one
@@ -53,7 +54,7 @@ class AppCLI
     sleep(1)
     puts "Your Mission: Push Lysa Arryon through the Moon Door!"
     response = @@prompt.select("LittleFinger has declared Lysa a traitor!!!. Do you execute his command?", ["Kessa", "Doar"])
-      if response == "Doar" 
+      if response == "Doar"
         puts "You saved Lysa and the real traitor, LittleFinger, has fallen through the moon door!"
         @new_user.power += 50
         puts "You're getting stronger! Your power level is now #{@new_user.power}."
@@ -66,7 +67,7 @@ class AppCLI
       level_three
   end
 
-  def level_three 
+  def level_three
     puts "Welcome to Riverrun #{@user_name.capitalize}, land of the Freys."
     sleep(1)
     puts "Your Mission: Stop the Red Wedding"
@@ -87,7 +88,7 @@ class AppCLI
     response = @@prompt.select("Margaery Tyrell gives you a posion to kill Joffery, will it do the job?", ["Kessa", "Doar"])
       if response == "Doar"
         puts "The purple wedding was a beautiful affair."
-      else @user_name.life_status = "Dead"
+      else @new_name.life_status = "Dead"
         puts "Joffery lives and He wants to play with you."
         die($checkpoint)
       end
@@ -99,10 +100,10 @@ class AppCLI
     sleep(1)
     puts "Your Mission: Don't Die in the Iron Islands!"
     puts "Respond to the phrase correctly: What is Dead May Never Die"
-    response = gets.chomp 
+    response = gets.chomp
       if response.downcase == "but rises again harder and stronger"
         puts "Head to the Stormlands, Cersi's head is almost yours."
-      else @user_name.life_status = "Dead"
+      else @new_name.life_status = "Dead"
         puts "What is dead, will stay dead when it comes to you! Thanks for playing."
         die($checkpoint)
       end
@@ -120,11 +121,17 @@ class AppCLI
         puts "NOOOOO, So close!"
         die($checkpoint)
       end
-      level_seven
+      level_seven_battle_scene
   end
 
-  def level_seven
+  def level_seven_battle_scene
+    puts "Welcome to Kingslanding #{@user_name.capitalize}, land of the Lannisters"
+    sleep(1)
+    puts "Your Mission: Conquer House Lannister and defeat Queen Cersi!"
+    sleep(1)
+    puts "Get ready... Attack House Lannister!"
 
+    battle_house_scene
   end
 
   def create_new_member
@@ -135,11 +142,43 @@ class AppCLI
       puts "Hi #{@new_user.name}! Welecome to level one you're currently #{@new_user.life_status} with a power level of #{@new_user.power}"
   end
 
+  def battle_house_scene
+    lannister_house = rand(1..10000)
+
+    army = @@prompt.select("Choose your ARMY!!!", ["The Dothraki Army", "The Wildlings Army", "The Unsullied Army", "The Golden Company Army"])
+
+    battle_house = House.where(name: @user_house)
+
+      battle_house.map do |house|
+      if @user_house == house.name && army == "The Dothraki Army" && house.power > lannister_house
+        house.power += rand(1..1000)
+        puts "your house power increased to #{house.power}"
+
+      elsif @user_house == house.name && army == "The Wildlings Army" && house.power > lannister_house
+        house.power -= rand(1..1000)
+        puts "The Wildlings abandoned your army before the siege your house power is #{house.power}"
+
+      elsif @user_house == house.name && army == "The Unsullied Army" && house.power > lannister_house
+        house.power += rand(1..1000)
+        puts "Your army The Unsullied have conquered the Lannister House!"
+
+      elsif @user_house == house.name && army == "The Golden Company Army" && house.power > lannister_house
+        house.power -= rand(1..1000)
+        puts "The Golden Company has betrayed and you will now die."
+
+      else @user_house == house.name && house.power < lannister_house
+        puts "The lannisters crushed your army. You will suffer under Cersi!"
+
+        end
+      end
+  end
 
   def picked_house
     House.all.find do |house|
       if @user_house == house.name
-         puts "#{@user_name.capitalize} you picked #{house.name}! your oath is #{house.oath}!"
+          # house.power = 100
+         puts "#{@user_name.capitalize} you picked #{house.name}, #{house.house_crest}! your oath is #{house.oath}!"
+         puts "Your house power level is #{house.power}"
        end
     end
   end
