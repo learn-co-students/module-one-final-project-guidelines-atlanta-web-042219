@@ -7,7 +7,8 @@ class AppController
     end
     # This code will be optimized with the prompt gem but this is just to get it all up and running with a 
     # basic structure
-    #Add optional verification step with randomly generated PIN
+    # Todo : Add optional verification step with randomly generated PIN
+    
     def welcome
         puts "Welcome to literally the best app ever!"
         prompt = TTY::Prompt.new(active_color: :cyan)
