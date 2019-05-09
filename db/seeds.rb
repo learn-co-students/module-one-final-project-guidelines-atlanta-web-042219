@@ -5,4 +5,4 @@ Filter.destroy_all
 #...
 
 User.create(name: "Developer", username: "", displayname: "Test Mode", password: "")
-Default_Filters.run(User.find_by(username: "").id)
+Filter.set_default_filters(User.find_by(username: "").id)

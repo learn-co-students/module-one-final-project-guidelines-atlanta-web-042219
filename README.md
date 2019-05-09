@@ -20,7 +20,7 @@ Requires Ruby 2.6.1 or later and a variety of Ruby Gems (check Gemfile or use "b
 [Song Lyrics API](https://lyricsovh.docs.apiary.io/#)
 
 ## How do I use it?
-Clean.ly is a CLI app designed to be run from the user's terminal.
+After cloning this repository, navigate to the project's directly in your terminal and type "ruby bin/run.rb"
 
 ## Credits
 Many thanks to Brit for suggesting such cool interface gems!
