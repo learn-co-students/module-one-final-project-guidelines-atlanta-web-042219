@@ -73,6 +73,8 @@ class AppCLI
     response = @@prompt.select("Who can stop the Red Wedding and Save the Starks?", ["Ned Stark", "Bran Stark", "Arya Stark", "Sansa Stark"])
       if response == "Arya Stark"
         puts "Where are the Freys?"
+        @new_user.power += 50
+        puts "You're getting stronger! Your power level is now #{@new_user.power}."
       else @new_user.life_status = "Dead"
         puts "YOU KILLED THE STARKS!!! SHAME, SHAME, SHAME"
         die($checkpoint)
@@ -87,9 +89,11 @@ class AppCLI
     response = @@prompt.select("Margaery Tyrell gives you a posion to kill Joffery, will it do the job?", ["Kessa", "Doar"])
       if response == "Doar"
         puts "The purple wedding was a beautiful affair."
+        @new_user.power += 50
+        puts "You're getting stronger! Your power level is now #{@new_user.power}."
       else @new_name.life_status = "Dead"
         puts "Joffery lives and He wants to play with you."
-        die($checkpoint)
+        # die($checkpoint)
       end
     level_five
   end
@@ -102,9 +106,11 @@ class AppCLI
     response = gets.chomp
       if response.downcase == "but rises again harder and stronger"
         puts "Head to the Stormlands, Cersi's head is almost yours."
+        @new_user.power += 50
+        puts "You're getting stronger! Your power level is now #{@new_user.power}."
       else @new_user.life_status = "Dead"
         puts "What is dead, will stay dead when it comes to you! Thanks for playing."
-        die($checkpoint)
+        # die($checkpoint)
       end
       level_six
   end
@@ -116,9 +122,11 @@ class AppCLI
     response = @@prompt.select("Which character does Brienne of Tarth rescue?", ["Arya", "Bran", "Sansa", "Rickon"])
       if response ==  "Sansa"
         puts "At Dawn leave for King's Landing and Claim Your Throne...if you can Beat Cersi"
+        @new_user.power += 50
+        puts "You're getting stronger! Your power level is now #{@new_user.power}."
       else
         puts "NOOOOO, So close!"
-        die($checkpoint)
+        # die($checkpoint)
       end
       level_seven_battle_scene
   end
@@ -164,10 +172,10 @@ class AppCLI
   end
 
   def level_eight
-    puts "You made it to the Red Keep and will battle Cersi for the throne."
+    puts "You made it to the Red Keep and want for the throne."
     fight = @@prompt.select("What will you use to kill Queen Cersi?", ["White Walker's Ice Blade", "The Nightfall", "Crossbow"])
+    @new_user.power += 50
     battle_cersi
-
   end
 
   def create_new_member
@@ -179,11 +187,14 @@ class AppCLI
   end
 
   def battle_cersi
-    cersi_power = rand(1..700)
+    cersi_power = rand(1..550)
     if @new_user.power > cersi_power
+      puts "Your power level reached #{@new_user.power}!"
       puts "You defeat Queen Cersi! Take your seat on the iron throne!"
+      exit
     else 
       puts "Queen Cersi will rule the seven kingdoms F O R E V E R "
+      exit
     end
   end 
 
