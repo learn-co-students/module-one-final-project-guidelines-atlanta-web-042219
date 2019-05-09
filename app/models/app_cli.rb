@@ -1,14 +1,15 @@
 class AppCLI
   @@prompt = TTY::Prompt.new
-
+  @@font = TTY::Font.new(:starwars)
   def run
-    puts "Welcome to Game of Thrones 2.0!"
+    puts @@font.write("Game of Thrones 2.0!")
+    # `say "#{game_of_thrones}"`
 
     main_menu
   end
 
   def main_menu
-    puts "Create your name."
+    puts "Create your name.\n"
       @user_name = gets.chomp
       sleep(1)
 
@@ -19,7 +20,7 @@ class AppCLI
           puts "Invalid Entry. Try Again"
       end
 
-    puts "Where does your allegiance lye"
+    puts "Where does your allegiance lye\n"
     @user_house = @@prompt.select("Choose your house", ["House Stark", "House Targaryen", "House Lannister"])
 
     case @user_house
@@ -183,7 +184,8 @@ class AppCLI
       name: "#{@user_name.capitalize}",
       life_status: "Alive",
       power: 100)
-      puts "Hi #{@new_user.name}! Welecome to level one you're currently #{@new_user.life_status} with a power level of #{@new_user.power}"
+      puts "Hi #{@new_user.name}! \nWelecome to level one you're currently #{@new_user.life_status} with a power level of #{@new_user.power}
+      \n"
   end
 
   def battle_cersi
@@ -202,7 +204,7 @@ class AppCLI
     House.all.find do |house|
       if @user_house == house.name
           # house.power = 100
-         puts "#{@user_name.capitalize} you picked #{house.name}, #{house.house_crest}! your oath is #{house.oath}!"
+         puts "#{@user_name.capitalize} you picked #{house.name}! your oath is #{house.oath}!\n"
          puts "Your house power level is #{house.power}"
        end
     end
