@@ -101,8 +101,7 @@ class MainMenu
 		elsif input == 'Return to main menu'
 			self.main_menu
 		else
-			input = input.gsub(%q["],'').split(' by ')
-			binding.pry
+			input = input.gsub(%Q["],'').split(' by ')
 			$search = Search.find_by(user_id: $user.id, song_id: Song.find_by(title: input[0], artist: input[1]).id)
 			self.song_menu
 		end
