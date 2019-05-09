@@ -21,9 +21,8 @@ ActiveRecord::Schema.define(version: 20190509162511) do
   end
 
   create_table "ratings", force: :cascade do |t|
-    t.integer  "value"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.integer "value"
+    t.date    "date"
   end
 
   create_table "user", force: :cascade do |t|
