@@ -35,10 +35,12 @@ class AppCLI
   def level_one
     puts "Welcome to the North #{@user_name.capitalize}, land of the Starks."
     sleep(1)
-    puts "Your Mission: Kill the White Walker King!"
+    puts "Your Mission: Kill the White Walker Night King!"
     weapon = @@prompt.select("Pick your weapon", ["Valyrian Steel", "Dragon Fire", "Steak Through the Heart", "Dragon Glass"])
       if weapon == "Valyrian Steel" || weapon == "Dragon Glass"
         puts "You defeated the Night King!"
+        @new_user.power += 50
+        puts "You're getting stronger! Your power level is now #{@new_user.power}."
       else @new_user.life_status = "Dead"
         puts "The Night King killed you, and you're now part of the undead army."
         die($checkpoint)
@@ -53,6 +55,8 @@ class AppCLI
     response = @@prompt.select("LittleFinger has declared Lysa a traitor!!!. Do you execute his command?", ["Kessa", "Doar"])
       if response == "Doar" 
         puts "You saved Lysa and the real traitor, LittleFinger, has fallen through the moon door!"
+        @new_user.power += 50
+        puts "You're getting stronger! Your power level is now #{@new_user.power}."
       else @new_user.life_status = "Dead"
         puts "Look you can FLY!! HAHHAHAHA!!!"
         die($checkpoint)
@@ -126,8 +130,9 @@ class AppCLI
   def create_new_member
     @new_user = Member.create(
       name: "#{@user_name.capitalize}",
-      life_status: "Alive")
-      puts "Hi #{@new_user.name}! Welecome to level one your'e currently #{@new_user.life_status}"
+      life_status: "Alive",
+      power: 100)
+      puts "Hi #{@new_user.name}! Welecome to level one you're currently #{@new_user.life_status} with a power level of #{@new_user.power}"
   end
 
 
