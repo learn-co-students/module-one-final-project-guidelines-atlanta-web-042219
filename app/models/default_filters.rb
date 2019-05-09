@@ -29,7 +29,7 @@ class Default_Filters
 		Filter.create(word: "fucker", replacement: "idiot", user_id: id)
 		Filter.create(word: "fuckers", replacement: "idiots", user_id: id)
 		Filter.create(word: "fucking", replacement: "loving", user_id: id)
-		Filter.create(word: "fuckin'", replacement: "lovin'", user_id: id)
+		Filter.create(word: "fuckin", replacement: "lovin'", user_id: id)
 		Filter.create(word: "fucks", replacement: "cares", user_id: id)
 		Filter.create(word: "fuckup", replacement: "loser", user_id: id)
 		Filter.create(word: "goddamn", replacement: "goshdurn", user_id: id)

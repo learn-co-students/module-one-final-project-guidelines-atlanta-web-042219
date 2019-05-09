@@ -75,7 +75,6 @@ class Login
 			print $continue_text
 			gets
 			MainMenu.run
-
 		else
 			login_spinner('Creating new user profile', false, '-  '+'That username is taken.'.colorize(:red))
 			print $try_again_text
