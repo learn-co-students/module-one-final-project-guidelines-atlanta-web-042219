@@ -20,26 +20,26 @@ class AppCLI
           puts "Invalid Entry. Try Again"
       end
 
-    puts "Where does your allegiance lye\n"
+    puts "Where does your allegiance lye...\n\n"
     sleep(2)
-    @user_house = @@prompt.select("Choose your house", ["House Stark", "House Targaryen", "House Lannister"])
+    @user_house = @@prompt.select("Choose your house\n", ["House Stark", "House Targaryen", "House Lannister"])
 
     case @user_house
       when @user_house
         picked_house
       else
-        puts "Not an option. Try Again"
+        puts "Not an option. Try Again\n"
     end
     $checkpoint = 1
     level_one
   end
 
   def level_one
-    puts "\nWelcome to the North #{@user_name.capitalize}, land of the Starks.\n"
+    puts "Welcome to the North #{@user_name.capitalize}, land of the Starks.\n\n"
     sleep(1)
-    puts "\nYour Mission: Kill the White Walker Night King!\n"
+    puts "Your Mission: Kill the White Walker Night King!\n"
     sleep(2)
-    weapon = @@prompt.select("Pick your weapon", ["Valyrian Steel", "Dragon Fire", "Steak Through the Heart", "Dragon Glass"])
+    weapon = @@prompt.select("Pick your weapon\n", ["Valyrian Steel", "Dragon Fire", "Steak Through the Heart", "Dragon Glass"])
       if weapon == "Valyrian Steel" || weapon == "Dragon Glass"
         sleep(1)
         puts "You defeated the Night King!\n\n"
@@ -55,35 +55,35 @@ class AppCLI
   end
 
   def level_two
-    puts "Welcome to the Vale #{@user_name.capitalize}, land of the Arryns.\n"
+    puts "Welcome to the Vale #{@user_name.capitalize}, land of the Arryns.\n\n"
     sleep(1)
-    puts "\nYour Mission: Push Lysa Arryon through the Moon Door!\n"
+    puts "\nYour Mission: Push Lysa Arryon through the Moon Door!\n\n"
     response = @@prompt.select("LittleFinger has declared Lysa a traitor!!!. Do you execute his command?\n", ["Kessa", "Doar"])
       if response == "Doar"
-        puts "You saved Lysa and the real traitor, LittleFinger, has fallen through the moon door!\n"
+        puts "You saved Lysa and the real traitor, LittleFinger, has fallen through the moon door!\n\n"
         @new_user.power += 50
-        puts "You're getting stronger! Your power level is now #{@new_user.power}.\n"
+        puts "You're getting stronger! Your power level is now #{@new_user.power}.\n\n"
       else @new_user.life_status = "Dead"
-        puts "Look you can FLY!! HAHHAHAHA!!!\n"
+        puts "Look you can FLY!! HAHHAHAHA!!!\n\n"
         die($checkpoint)
       end
-      puts "checkpoint reached!"
+      puts "checkpoint reached!\n\n"
       $checkpoint = 3
       sleep(2)
       level_three
   end
 
   def level_three
-    puts "Welcome to Riverrun #{@user_name.capitalize}, land of the Freys.\n"
+    puts "Welcome to Riverrun #{@user_name.capitalize}, land of the Freys.\n\n"
     sleep(1)
-    puts "Your Mission: Stop the Red Wedding\n"
-    response = @@prompt.select("Who can stop the Red Wedding and Save the Starks?", ["Ned Stark", "Bran Stark", "Arya Stark", "Sansa Stark"])
+    puts "Your Mission: Stop the Red Wedding\n\n"
+    response = @@prompt.select("Who can stop the Red Wedding and Save the Starks?\n", ["Ned Stark", "Bran Stark", "Arya Stark", "Sansa Stark"])
       if response == "Arya Stark"
-        puts "Where are the Freys?\n"
+        puts "Where are the Freys?\n\n"
         @new_user.power += 50
-        puts "You're getting stronger! Your power level is now #{@new_user.power}.\n"
+        puts "You're getting stronger! Your power level is now #{@new_user.power}.\n\n"
       else @new_user.life_status = "Dead"
-        puts "YOU KILLED THE STARKS!!! SHAME, SHAME, SHAME\n"
+        puts "YOU KILLED THE STARKS!!! SHAME, SHAME, SHAME\n\n"
         die($checkpoint)
       end
       sleep(2)
@@ -94,7 +94,7 @@ class AppCLI
     puts "Welcome to Highgarden #{@user_name.capitalize}, land of the Tyrells.\n"
     sleep(1)
     puts "Your Mission: Assassinate Joffery!!!\n"
-    response = @@prompt.select("Margaery Tyrell gives you a posion to kill Joffery, will it do the job?", ["Kessa", "Doar"])
+    response = @@prompt.select("Margaery Tyrell gives you a posion to kill Joffery, will it do the job?\n", ["Kessa", "Doar"])
       if response == "Doar"
         puts "The purple wedding was a beautiful affair.\n"
         @new_user.power += 50
@@ -214,9 +214,10 @@ class AppCLI
     House.all.find do |house|
       if @user_house == house.name
           # house.power = 100
-         puts "#{@user_name.capitalize} you picked #{house.name}! Your oath is #{house.oath}!\n"
-         puts "Your house power level is #{house.power}\n"
-       end
+        sleep(2)
+        puts "\n#{@user_name.capitalize} you picked #{house.name}! Your oath is #{house.oath}!\n"
+        puts "\nYour house power level is #{house.power}\n\n"
+      end
     end
   end
 
@@ -233,5 +234,4 @@ class AppCLI
       self.level_five
     end
   end
-
 end
