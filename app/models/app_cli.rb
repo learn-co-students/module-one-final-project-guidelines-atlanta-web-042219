@@ -1,10 +1,13 @@
+# require 'audite'
+# @@player = Audite.new
+
 class AppCLI
   @@prompt = TTY::Prompt.new
   @@font = TTY::Font.new(:starwars)
   @@pastel = Pastel.new
 
   def run
-
+    # @@player.load('game-of-thrones-theme-song-ringtone-30782.mp3')
     puts @@pastel.red.on_black.bold@@font.write("Game of Thrones 2.0!")
 
     main_menu
@@ -186,7 +189,7 @@ class AppCLI
 
   def level_eight
     puts @@pastel.green.bold.underline"You made it to the Red Keep.\n"
-    puts @@pastel.red.bold"You made it to the Red Keep and want to take the Iron Throne.\n"
+    puts @@pastel.green.bold"Will you have enough power to take the Iron Throne?\n"
     fight = @@prompt.select("What will you use to kill Queen Cersi?", ["White Walker's Ice Blade", "The Nightfall", "Crossbow"])
     @new_user.power += 50
     battle_cersi
@@ -205,11 +208,13 @@ class AppCLI
     cersi_power = rand(1..550)
     if @new_user.power > cersi_power
       puts "Your power level reached #{@new_user.power}!\n"
-      puts @@pastel.green.on_black.italic"You defeat Cersi! The Iron Throne Is Yours!\n"
+      puts @@pastel.green.on_black.italic"YOU DEFEAT CERSI! THE IRON THRONE IS YOURS!\n"
+      @@pastel.green.on_black.bold@@font.write("Game Over")
       exit
     else
-      puts @@pastel.red.bold"You failed your mission and now..."
-      puts @@pastel.black.on_red.bold.italic"Queen Cersi Rules F O R E V E R \n"
+      puts @@pastel.red.bold"YOU FAILED YOUR MISSION and now..."
+      puts @@pastel.black.on_red.bold.italic"QUEEN CERSI WILL RULE F O R E V E R \n"
+      puts @@pastel.red.on_black.bold@@font.write("Game Over")
       exit
     end
   end

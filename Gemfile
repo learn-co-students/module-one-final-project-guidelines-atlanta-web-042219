@@ -11,3 +11,4 @@ gem 'pastel' #provides independent coloring to text
 # gem 'tty-box' #allows us to put text into boxes
 gem 'tty-font' #write text in large font
 # gem 'win32-sound'
+gem 'audite'
