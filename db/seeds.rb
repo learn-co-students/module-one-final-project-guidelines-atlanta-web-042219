@@ -28,11 +28,11 @@ lannister = House.create(
 #   house_crest: "https://vignette.wikia.nocookie.net/gameofthrones/images/8/86/House-Greyjoy-Main-Shield.PNG/revision/latest?cb=20170523015836",
 #   oath: "What is Dead May Never Die"
 # )
-# baratheon = House.create(
-#   name: "House Baratheon",
-#   house_crest: "https://awoiaf.westeros.org/images/thumb/2/2d/House_Baratheon.svg/1200px-House_Baratheon.svg.png",
-#   oath: "Fire and Blood"
-# )
+baratheon = House.create(
+  name: "House Baratheon",
+  house_crest: "https://awoiaf.westeros.org/images/thumb/2/2d/House_Baratheon.svg/1200px-House_Baratheon.svg.png",
+  oath: "Ours is the Fury"
+)
 
 
 maryam = Member.create(

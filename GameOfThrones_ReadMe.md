@@ -1,3 +1,7 @@
+Project Contributors:
+  Maryam Joseph
+  Preston Elliott
+
 Houses
   has_many :allegiances
   has_many :members, through: :allegiances
@@ -30,11 +34,16 @@ Members
   t.string :life_status
 
 User Stories:
-  1.Create Name
-  2.Become allegiant to multiple Houses
-  3.User can change Allegiances
-  4.User can delete allegiances
-  5.User can see all allegiance they've made
+  1.Create Member Name (Username)
+  2.Become allegiant to a house to begin the game
+  3.Member increases in power as they progress through each level of the game
+  4.Member's House can battle another house
+  5.Member can lose a round of the game and reload to the closest checkpoint
+
+Game of Thrones 2.0: 
+  Welcome to our Game of Thrones Themed Game!
+  Our game has multiple levels and will test your knowledge of Westeros and the characters that live there!
+  Let's see if you have the skills to take the Iron Throne!
 
 
 Game Path
@@ -129,6 +138,5 @@ Level SEVEN: Kings Landing(Land of the Lannister's)
         puts "you lose"
     else
         puts "Invalid response. Try Again"
-        end
-      end
     end
+  end
