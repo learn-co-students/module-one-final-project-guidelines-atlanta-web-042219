@@ -1,15 +1,17 @@
 class AppCLI
   @@prompt = TTY::Prompt.new
   @@font = TTY::Font.new(:starwars)
+  @@pastel = Pastel.new
+
   def run
-    puts @@font.write("Game of Thrones 2.0!")
+    puts @@pastel.red@@font.write("Game of Thrones 2.0!")
     # `say "#{game_of_thrones}"`
 
     main_menu
   end
 
   def main_menu
-    puts "Create your name.\n"
+    puts @@pastel.red.on_black.bold"How are you called?.\n"
       @user_name = gets.chomp
       sleep(1)
 
@@ -20,7 +22,7 @@ class AppCLI
           puts "Invalid Entry. Try Again"
       end
 
-    puts "Where does your allegiance lye...\n\n"
+    puts @@pastel.red.on_black.bold"Where does your allegiance lye...\n\n"
     sleep(2)
     @user_house = @@prompt.select("Choose your house\n", ["House Stark", "House Targaryen", "House Lannister"])
 
@@ -35,7 +37,7 @@ class AppCLI
   end
 
   def level_one
-    puts "Welcome to the North #{@user_name.capitalize}, land of the Starks.\n\n"
+    puts @@pastel.blue.on_black.bold"Welcome to the North #{@user_name.capitalize}, land of the Starks.\n\n"
     sleep(1)
     puts "Your Mission: Kill the White Walker Night King!\n"
     sleep(2)
@@ -157,7 +159,7 @@ class AppCLI
     battle_house = House.where(name: @user_house)
 
       battle_house.map do |house|
-      if @user_house == house.name && army == "The Dothraki Army" 
+      if @user_house == house.name && army == "The Dothraki Army"
         house.power += rand(1..50)
         house.power > lannister_house
           puts "your house power increased to #{house.power} and you defeated the Lannister army. You'll now battle Cersi.\n"
@@ -204,11 +206,11 @@ class AppCLI
       puts "Your power level reached #{@new_user.power}!\n"
       puts "You defeat Queen Cersi! Take your seat on the iron throne!\n"
       exit
-    else 
+    else
       puts "Queen Cersi will rule the seven kingdoms F O R E V E R \n"
       exit
     end
-  end 
+  end
 
   def picked_house
     House.all.find do |house|
