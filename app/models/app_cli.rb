@@ -185,11 +185,8 @@ class AppCLI
   end
 
   def level_eight
-<<<<<<< HEAD
     puts @@pastel.green.bold.underline"You made it to the Red Keep.\n"
-=======
     puts @@pastel.red.bold"You made it to the Red Keep and want to take the Iron Throne.\n"
->>>>>>> cc0c57a82b9b57636959cd27c2850b13e490239e
     fight = @@prompt.select("What will you use to kill Queen Cersi?", ["White Walker's Ice Blade", "The Nightfall", "Crossbow"])
     @new_user.power += 50
     battle_cersi

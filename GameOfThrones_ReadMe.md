@@ -2,6 +2,18 @@ Project Contributors:
   Maryam Joseph
   Preston Elliott
 
+User Stories:
+  1.Create Member Name (Username)
+  2.Member becomes allegiant to a house to begin the game
+  3.Member increases in power as they progress through each level of the game
+  4.Member's House can battle another house
+  5.Member can lose a round of the game and reload to the closest checkpoint
+
+Game of Thrones 2.0: 
+  Welcome to our Game of Thrones Themed Game!
+  Our game has multiple levels and will test your knowledge of Westeros and the characters that live there!
+  Let's see if you have the skills to take the Iron Throne!
+
 Houses
   has_many :allegiances
   has_many :members, through: :allegiances
@@ -9,8 +21,9 @@ Houses
   schema:
   create_table :houses do |t|
   t.string :name
-  t.integer :year_founded
   t.text :house_crest(url)
+  t.string :oath
+  t.integer :power
 
 
 Allegiances
@@ -30,38 +43,24 @@ Members
   schema:
   create_table :members do |t|
   t.string :name
-  t.string :hometown
   t.string :life_status
-
-User Stories:
-  1.Create Member Name (Username)
-  2.Become allegiant to a house to begin the game
-  3.Member increases in power as they progress through each level of the game
-  4.Member's House can battle another house
-  5.Member can lose a round of the game and reload to the closest checkpoint
-
-Game of Thrones 2.0: 
-  Welcome to our Game of Thrones Themed Game!
-  Our game has multiple levels and will test your knowledge of Westeros and the characters that live there!
-  Let's see if you have the skills to take the Iron Throne!
-
+  t.integer :power
 
 Game Path
-7 Kingdoms
+  7 Kingdoms
+
+Main Menu: Create a Member of a House 
+  Before we begin the game, the user will start in the main menu and enter in their name. #create_new_member will initialize the new member with the name that they enter and default values of life_status: "Alive" and power: 100. The member will also select which house to join which will initialize with default value power: 1.
 
 Level One: The North(Land of the Starks)
-  Goal: Kill White Walker Kind
+  Goal: Kill White Walker Night King
   Pick your weapon
   A. Valyrian Steel
   B. Dragon Fire
   C. Steak Through the Heart
   D. Dragon Glass
 
-  #if they guess correctly, move to the next round.
-  #else life_status = "dead"
-  #puts "Your'e part of the undead army."
-  #game restarts
-  #end
+In level one, the newly created member's goal is to defeat the Night King. They receive a prompt menu to select which weapon will help them overcome this level of the game.
 
 Level Two: The Vale(Land of the Arryns)
   Goal: Push Lysa Arryon through the Moon Door
@@ -69,11 +68,7 @@ Level Two: The Vale(Land of the Arryns)
   q.suffix 'Kessa/Daor'
   end
 
-  #if they guess correctly, move to the next round.
-  #else life_status = "dead"
-  #puts "Look you can FLY!!HAHHAHAHA!!!"
-  #game restarts
-  #end
+In level two, the member must choose whether to believe LittleFinger and follow his command with a yes/no prompt. If they answer correctly, they will proceed to level three.
 
 Level Three: Riverrun(Land of the Frey/Tullies)
   Goal: Stop the Red Wedding
@@ -83,11 +78,7 @@ Level Three: Riverrun(Land of the Frey/Tullies)
   C. Aria Stark
   D. Sansa Stark
 
-  #if they guess correctly, move to the next round.
-  #else life_status = "dead"
-  #puts "YOU KILLED THE STARKS!!! SHAME, SHAME, SHAME"
-  #game restarts
-  #end
+
 
 Level Four: Highgraden(Land of the Tyrell's)
   Goal: Assassinate Joffery!!!

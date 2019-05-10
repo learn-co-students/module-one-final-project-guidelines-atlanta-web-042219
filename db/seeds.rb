@@ -31,7 +31,8 @@ lannister = House.create(
 baratheon = House.create(
   name: "House Baratheon",
   house_crest: "https://awoiaf.westeros.org/images/thumb/2/2d/House_Baratheon.svg/1200px-House_Baratheon.svg.png",
-  oath: "Ours is the Fury"
+  oath: "Ours is the Fury",
+  power: 1
 )
 
 
