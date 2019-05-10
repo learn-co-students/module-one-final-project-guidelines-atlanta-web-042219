@@ -23,7 +23,7 @@ class AppCLI
 
     puts @@pastel.red.on_black.bold"Where does your allegiance lye...\n\n"
     sleep(2)
-    @user_house = @@prompt.select("Choose your house\n", ["House Stark", "House Targaryen", "House Lannister"])
+    @user_house = @@prompt.select("Choose your house\n", ["House Stark", "House Targaryen", "House Baratheon"])
 
     case @user_house
       when @user_house
@@ -184,7 +184,7 @@ class AppCLI
   end
 
   def level_eight
-    puts @@pastel.red.bold"You made it to the Red Keep and want for the throne.\n"
+    puts @@pastel.red.bold"You made it to the Red Keep and want to take the Iron Throne.\n"
     fight = @@prompt.select("What will you use to kill Queen Cersi?", ["White Walker's Ice Blade", "The Nightfall", "Crossbow"])
     @new_user.power += 50
     battle_cersi
