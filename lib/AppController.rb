@@ -1,4 +1,3 @@
-require 'pry'
 class AppController
     attr_reader :name
     @@current_user = nil
@@ -10,21 +9,19 @@ class AppController
     end
     # This code will be optimized with the prompt gem but this is just to get it all up and running with a 
     # basic structure
-    # Todo : Add optional verification step with randomly generated PIN
-    
+    #Add optional verification step with randomly generated PIN
     def welcome
-        puts "Welcome to literally the best app ever!"
         prompt = TTY::Prompt.new(active_color: :cyan)
-        @@current_user = prompt.ask("What's your name?")
+        @@current_user = prompt.ask("Please type in your name to begin:")
         if User.find_by(name: @@current_user) == nil
             User.create(name: @@current_user)
-            puts "*********************"
-            puts "Hello #{@@current_user}"
-            puts "*********************"
+            puts "********************************************************************"
+            puts "Hello #{@@current_user}, my name is Qamar, it's lovely to meet you!\nYou can tell me anything you like to clear your head and,\n I can tell you how you've been feeling today."
+            puts "********************************************************************"
         else
-            puts "*********************"
-            puts "Welcome back #{@@current_user}"
-            puts "*********************"
+            puts "********************************************************"
+            puts "Welcome back #{@@current_user}, I'm sure you missed me!"
+            puts "********************************************************"
         end
         
         
@@ -33,9 +30,10 @@ class AppController
     def mood_check
         puts "On a scale of 1 to 10, how are you feeling today?"
         new_rating = gets.strip
-        jo = Rating.create(value: new_rating.to_i, date: Date.today)
-        # binding.pry
-        puts "Thank you, let's just jump into it"
+        Rating.create(value: new_rating.to_i, date: Date.today)
+        puts "********************************"
+        puts "Thank you, let's begin shall we?"
+        puts "********************************"
     end
 
     def main_menu
@@ -85,13 +83,13 @@ class AppController
 
     def breath_exercise
         2.times do
-        puts "Inhale"
+        puts "Breathe in"
         3.downto(0) do |i|
             puts ".........."
             sleep 1
         end
-        puts "Exhale"
-        2.downto(0) do |i|
+        puts "Breathe out"
+        3.downto(0) do |i|
             puts ".........."
             sleep 1
         end
@@ -99,12 +97,18 @@ class AppController
     end
     
     def generate_technique
-        techniques = ["YOLO", "Buy a cat", "Get sum chick-fil-a"]
-        puts "*******************"
+        techniques = [
+            "Try a body scan. Close your eyes and focus on one part of your body at a time.\nAcknowledge the feeling then move on to the next body part. ", 
+            "Try to actively listen to someone today. Focus on the person's body language\nand what they're saying so they can feel fully heard and seen.", 
+            "Try a 5 senses exercise. Notice 5 things that you can see, 4 things that you can feel,\n3 things that you can hear, 2 things you can smell, and 1 thing that you can taste.",
+            "Try being an alien. Pretend you're an alien who inhabited your human body, then look\naround at your life with foreign eyes to induce gratitude and for a new perspective.",
+            "Observe a leaf for 5 minutes. This exercise calls for nothing but a leaf and your attention.\nPick up a leaf, hold it in your hand, and give it your full attention for five minutes.\nNotice the colors, the shape, the patterns, and the texture.",
+            "If you feel your minding drifting to the future of anxiety or regret of the past, bring your\nattention to your breathe and nothing else. Focusing on the air flowing in your lungs will\nbring you back to the present"
+        ]
+        puts "*****************************************************************************"
         puts techniques.sample
-        puts "*******************"
+        puts "*****************************************************************************"
     end
-
     def access_journal
         prompt = TTY::Prompt.new(active_color: :cyan)
         choices = ["Create New Entry", "Read Past Entries", "Exit"]
@@ -229,7 +233,6 @@ class AppController
       user = User.find_by(name: @@current_user)
       entry_array = Entry.where(user_id: user.id)
       rating_array = entry_array.map { |entry| entry.rating.date == Date.today ? entry.rating : nil }.compact
-    #   binding.pry
       rating_array.each do |rating| 
         if (1..3).include?(rating.value)
             puts "Straight crap"
