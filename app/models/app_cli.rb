@@ -5,7 +5,6 @@ class AppCLI
 
   def run
     puts @@pastel.red@@font.write("Game of Thrones 2.0!")
-    # `say "#{game_of_thrones}"`
 
     main_menu
   end
