@@ -33,7 +33,8 @@ class AppController
     def mood_check
         puts "On a scale of 1 to 10, how are you feeling today?"
         new_rating = gets.strip
-        Rating.create(value: new_rating.to_i, date: Date.today)
+        jo = Rating.create(value: new_rating.to_i, date: Date.today)
+        binding.pry
         puts "Thank you, let's just jump into it"
     end
 
@@ -207,15 +208,12 @@ class AppController
 
     def access_mood
         prompt = TTY::Prompt.new(active_color: :cyan)
-        choices = ["Show me today's ratings", "Summarize my ratings for the week", "Exit"]
+        choices = ["Show me today's ratings", "Exit"]
         input = prompt.select("Welcome to feelings central!", choices)
 
         case (input)
         when "Show me today's ratings"
             mood_ratings
-            access_mood
-        when "Summarize my ratings for the week"
-            summarize_mood
             access_mood
         when "Exit"
             main_menu
@@ -233,11 +231,21 @@ class AppController
       rating_array = entry_array.map { |entry| entry.rating.date == Date.today ? entry.rating : nil }.compact
       binding.pry
       rating_array.each do |rating| 
-        puts rating.value 
-        puts "*********"
+        if (1..3).include?(rating.value)
+            puts "Straight crap"
+            puts "*********"
+        elsif (4..6).include?(rating.value)
+            puts "It's a meh from me dog"
+            puts "*********"
+        elsif (7..9).include?(rating.value)
+            puts "Feelin' Good"
+            puts "*********"
+        else 
+            puts "Perfect!!!"
+            puts "*********"
       end
     end
-
+end
     
 
 end
