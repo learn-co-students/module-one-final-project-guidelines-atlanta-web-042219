@@ -4,7 +4,7 @@ class AppCLI
   @@pastel = Pastel.new
 
   def run
-    puts @@pastel.red@@font.write("Game of Thrones 2.0!")
+    puts @@pastel.white.on_black@@font.write("Game of Thrones 2.0!")
 
     main_menu
   end
@@ -36,19 +36,19 @@ class AppCLI
   end
 
   def level_one
-    puts @@pastel.blue.on_black.bold"Welcome to the North #{@user_name.capitalize}, land of the Starks.\n\n"
+    puts @@pastel.black.on_blue.bold"Realm One: Welcome to the North #{@user_name.capitalize}, land of the Starks.\n\n"
     sleep(1)
     puts "Your Mission: Kill the White Walker Night King!\n"
     sleep(2)
     weapon = @@prompt.select("Pick your weapon\n", ["Valyrian Steel", "Dragon Fire", "Steak Through the Heart", "Dragon Glass"])
       if weapon == "Valyrian Steel" || weapon == "Dragon Glass"
         sleep(1)
-        puts "You defeated the Night King!\n\n"
+        puts @@pastel.blue.bold"You defeated the White Walker Night King!\n\n"
         @new_user.power += 50
         puts "You're getting stronger! Your power level is now #{@new_user.power}.\n\n"
       else @new_user.life_status = "Dead"
         sleep(1)
-        puts "The Night King killed you, and you're now part of the undead army.\n\n"
+        puts @@pastel.black.on_red.bold"The White Walker Night King killed you, and you're now part of his undead army.\n\n"
         die($checkpoint)
       end
     sleep(2)
@@ -56,16 +56,16 @@ class AppCLI
   end
 
   def level_two
-    puts "Welcome to the Vale #{@user_name.capitalize}, land of the Arryns.\n\n"
+    puts @@pastel.black.on_blue.bold"Realm Two: Welcome to the Vale #{@user_name.capitalize}, land of the Arryns.\n\n"
     sleep(1)
-    puts "\nYour Mission: Push Lysa Arryon through the Moon Door!\n\n"
-    response = @@prompt.select("LittleFinger has declared Lysa a traitor!!!. Do you execute his command?\n", ["Kessa", "Doar"])
+    puts "\nYour Mission: Execute Lysa Arryn by throwing her through the Moon Door!...or save her.\n\n"
+    response = @@prompt.select("LittleFinger has declared Lysa a traitor!!!. Do you obey his command?\n", ["Kessa", "Doar"])
       if response == "Doar"
-        puts "You saved Lysa and the real traitor, LittleFinger, has fallen through the moon door!\n\n"
+        puts "You saved Lysa and the real traitor, LittleFinger, has thrown through the Moon Door!\n\n"
         @new_user.power += 50
         puts "You're getting stronger! Your power level is now #{@new_user.power}.\n\n"
       else @new_user.life_status = "Dead"
-        puts "Look you can FLY!! HAHHAHAHA!!!\n\n"
+        puts @@pastel.black.on_red.bold"Look you can FLY!! HAHHAHAHA!!!\n\n"
         die($checkpoint)
       end
       puts "checkpoint reached!\n\n"
@@ -75,16 +75,16 @@ class AppCLI
   end
 
   def level_three
-    puts "Welcome to Riverrun #{@user_name.capitalize}, land of the Freys.\n\n"
+    puts @@pastel.black.on_blue.bold"Realm Three: Welcome to Riverrun #{@user_name.capitalize}, land of the Freys.\n\n"
     sleep(1)
     puts "Your Mission: Stop the Red Wedding\n\n"
     response = @@prompt.select("Who can stop the Red Wedding and Save the Starks?\n", ["Ned Stark", "Bran Stark", "Arya Stark", "Sansa Stark"])
       if response == "Arya Stark"
-        puts "Where are the Freys?\n\n"
+        puts "You saved the starks, we are forever in your debt!\n\n"
         @new_user.power += 50
         puts "You're getting stronger! Your power level is now #{@new_user.power}.\n\n"
       else @new_user.life_status = "Dead"
-        puts "YOU KILLED THE STARKS!!! SHAME, SHAME, SHAME\n\n"
+        puts @@pastel.black.on_red.bold"YOU KILLED THE STARKS!!! SHAME, SHAME, SHAME\n\n"
         die($checkpoint)
       end
       sleep(2)
@@ -92,16 +92,16 @@ class AppCLI
   end
 
   def level_four
-    puts "Welcome to Highgarden #{@user_name.capitalize}, land of the Tyrells.\n"
+    puts @@pastel.blue.on_black.bold"Realm Four: Welcome to Highgarden #{@user_name.capitalize}, land of the Tyrells.\n"
     sleep(1)
     puts "Your Mission: Assassinate Joffery!!!\n"
     response = @@prompt.select("Margaery Tyrell gives you a posion to kill Joffery, will it do the job?\n", ["Kessa", "Doar"])
       if response == "Doar"
-        puts "The purple wedding was a beautiful affair.\n"
+        puts "The Purple Wedding was a beautiful affair, thanks to #{@user_name.capitalize}.\n"
         @new_user.power += 50
         puts "You're getting stronger! Your power level is now #{@new_user.power}.\n"
       else @new_name.life_status = "Dead"
-        puts "Joffery lives and He wants to play with you.\n"
+        puts @@pastel.black.on_red.bold "Joffery lives and he wants to play with you.\n"
         # die($checkpoint)
       end
     sleep(2)
@@ -109,9 +109,9 @@ class AppCLI
   end
 
   def level_five
-    puts "Welcome to Iron Islands #{@user_name.capitalize}, land of the Greyjoys.\n"
+    puts @@pastel.blue.on_black.bold"Realm five: Welcome to Iron Islands #{@user_name.capitalize}, land of the Greyjoys.\n"
     sleep(1)
-    puts "Your Mission: Don't Die in the Iron Islands!\n"
+    puts "Your Mission: Don't Die in the Iron Islands.\n"
     puts "Respond to the phrase correctly: What is Dead May Never Die\n"
     response = gets.chomp
       if response.downcase == "but rises again harder and stronger"
@@ -119,7 +119,7 @@ class AppCLI
         @new_user.power += 50
         puts "You're getting stronger! Your power level is now #{@new_user.power}.\n"
       else @new_user.life_status = "Dead"
-        puts "What is dead, will stay dead when it comes to you! Thanks for playing.\n"
+        puts @@pastel.black.on_red.bold "What is dead, will stay dead when it comes to you! Thanks for playing.\n"
         # die($checkpoint)
       end
     sleep(2)
@@ -127,7 +127,7 @@ class AppCLI
   end
 
   def level_six
-    puts "Welcome to the Stormlands #{@user_name.capitalize}, land of the Baratheons.\n"
+    puts @@pastel.blue.on_black.bold"Realm Six: Welcome to the Stormlands #{@user_name.capitalize}, land of the Baratheons.\n"
     sleep(1)
     puts "Your Mission: Help Brienna of Tarth Fullfill Her Oath!\n"
     response = @@prompt.select("Which character does Brienne of Tarth rescue?", ["Arya", "Bran", "Sansa", "Rickon"])
@@ -136,7 +136,7 @@ class AppCLI
         @new_user.power += 50
         puts "You're getting stronger! Your power level is now #{@new_user.power}.\n"
       else
-        puts "NOOOOO, So close!\n"
+        puts @@pastel.black.on_red.bold"Brienne deemed you responsible for Sansa's death and relieved you of your head!\n"
         # die($checkpoint)
       end
     sleep(2)
@@ -144,11 +144,11 @@ class AppCLI
   end
 
   def level_seven_battle_scene
-    puts "Welcome to Kingslanding #{@user_name.capitalize}, land of the Lannisters\n"
+    puts @@pastel.blue.on_black.bold"Final Realm: Welcome to Kingslanding #{@user_name.capitalize}, land of the Lannisters\n"
     sleep(1)
     puts "Your Mission: Conquer House Lannister and defeat Queen Cersi!\n"
     sleep(1)
-    puts "Get ready... Attack House Lannister!\n"
+    puts "Get ready... defend #{@user_house} FINISH Lannister Army!\n"
 
 
     lannister_house = rand(1..5)
@@ -206,7 +206,7 @@ class AppCLI
       puts "You defeat Queen Cersi! Take your seat on the iron throne!\n"
       exit
     else
-      puts "Queen Cersi will rule the seven kingdoms F O R E V E R \n"
+      puts @@pastel.white.on_black@@font.write "Queen Cersi will rule the seven kingdoms F O R E V E R \n"
       exit
     end
   end
