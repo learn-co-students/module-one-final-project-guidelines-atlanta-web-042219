@@ -1,8 +1,11 @@
+require 'pry'
 class AppController
     attr_reader :name
+    @@current_user = nil
 
     def initialize
         welcome
+        mood_check
         main_menu
     end
     # This code will be optimized with the prompt gem but this is just to get it all up and running with a 
@@ -11,37 +14,41 @@ class AppController
     def welcome
         puts "Welcome to literally the best app ever!"
         prompt = TTY::Prompt.new(active_color: :cyan)
-        name = prompt.ask("What's your name?")
-        if User.find_by(name: name) == nil
-            User.create(name: name)
+        @@current_user = prompt.ask("What's your name?")
+        if User.find_by(name: @@current_user) == nil
+            User.create(name: @@current_user)
             puts "*********************"
-            puts "Hello #{name}"
+            puts "Hello #{@@current_user}"
             puts "*********************"
         else
             puts "*********************"
-            puts "Welcome back #{name}"
+            puts "Welcome back #{@@current_user}"
             puts "*********************"
         end
         
         
     end
 
-    def main_menu
-        puts "Main Menu"
-        puts "1. Practice Mindfulness"
-        puts "2. Your Journal"
-        puts "3. Your Mood"
-        puts "4. Exit"
-        choice = gets.strip
+    def mood_check
+        puts "On a scale of 1 to 10, how are you feeling today?"
+        new_rating = gets.strip
+        Rating.create(value: new_rating.to_i, date: Date.today)
+        puts "Thank you, let's just jump into it"
+    end
 
-        case (choice.to_i)
-        when 1
+    def main_menu
+        prompt = TTY::Prompt.new(active_color: :cyan)
+        choices = ["Practice Mindfulness", "Your Journal", "Your Mood", "Exit"]
+        input = prompt.select("Main Menu", choices)
+
+        case (input)
+        when "Practice Mindfulness"
             be_mindful
-        when 2
+        when "Your Journal"
             access_journal
-        when 3
+        when "Your Mood"
             access_mood
-        when 4
+        when "Exit"
             puts "Thank you for using my app!"
             exit
         else
@@ -53,20 +60,18 @@ class AppController
     end
 
     def be_mindful
-        puts "Select what you'd like to do today"
-        puts "1. Have a breathing exercise"
-        puts "2. Practice a technique"
-        puts "3. Exit"
-        choice = gets.strip
+        prompt = TTY::Prompt.new(active_color: :cyan)
+        choices = ["Have a breathing exercise", "Practice a technique", "Exit"]
+        input = prompt.select("Select what you'd like to do today", choices)
 
-        case (choice.to_i)
-        when 1
+        case (input)
+        when "Have a breathing exercise"
             breath_exercise
             be_mindful
-        when 2
+        when "Practice a technique"
             generate_technique
             be_mindful
-        when 3
+        when "Exit"
             main_menu
         else
             puts "*******************"
@@ -77,14 +82,14 @@ class AppController
     end
 
     def breath_exercise
-        3.times do
+        2.times do
         puts "Inhale"
-        5.downto(0) do |i|
+        3.downto(0) do |i|
             puts ".........."
             sleep 1
         end
         puts "Exhale"
-        5.downto(0) do |i|
+        2.downto(0) do |i|
             puts ".........."
             sleep 1
         end
@@ -99,45 +104,119 @@ class AppController
     end
 
     def access_journal
-        puts "Welcome to your journal!"
-        puts "1. Create New Entry"
-        puts "2. Read Past Entries"
-        puts "3. Exit"
-        choice = gets.strip
+        prompt = TTY::Prompt.new(active_color: :cyan)
+        choices = ["Create New Entry", "Read Past Entries", "Exit"]
+        input = prompt.select("Welcome to your journal!", choices)
 
-        case (choice.to_i)
-        when 1
-            # create_entry Should take in an input and save it into the database with a timestamp
+        case (input)
+        when "Create New Entry"
+            create_entry
             access_journal
-        when 2
-            # journal_entries Should display all of the user's previous entries with an edit/delete prompt at the bottom
+        when "Read Past Entries"
+            journal_entries
             access_journal
-        when 3
+        when "Exit"
             main_menu
         else
             puts "*******************"
             puts "Invalid try again!"
             puts "*******************"
             access_journal
+        end
+    end
+
+    def journal_entries
+        name = User.find_by(name: @@current_user)
+        entries = Entry.where(user_id: name.id)
+        entries.each { |entry| puts "#{entry.id}. #{entry.content}"}
+        prompt = TTY::Prompt.new(active_color: :cyan)
+        choices = ["Edit entry", "Delete entry", "Exit"]
+        input = prompt.select("What would you like to do?", choices)
+
+        case input
+        when 'Edit entry'
+            edit_entry
+            journal_entries
+        when "Delete entry"
+            delete_entry
+            journal_entries
+        when 'Exit'
+            main_menu
+        end
+
+    end
+
+    def create_entry
+        name = User.find_by(name: @@current_user)
+        puts "Tell me what's on your mind"
+        content = gets.chomp
+        new_entry = Entry.create(content: content, rating_id: Rating.last.id, user_id: name.id)
+        User.find_by(name: @@current_user).entries << new_entry
+        Rating.last.entries << new_entry
+        puts "***************"
+        puts "Your entry has been saved!"
+    end
+
+    def entry_prompt
+        puts "****************************************"
+        puts "Type in the number of your desired entry"
+        puts "****************************************"
+    end
+
+    def edit_entry
+        entry_prompt
+        choice = gets.chomp
+        entry = Entry.find(choice.to_i)
+        if entry == nil
+            puts "There's no such entry, please try again"
+            edit_entry
+        else 
+            puts entry.content
+            puts "**************************"
+            puts "Type in your content"
+            new_content = gets.chomp
+            entry.update(content: new_content)
+            puts "**************************"
+            puts "Your edit has been saved!"
+        end
+    end
+
+    def delete_entry
+        entry_prompt
+        choice = gets.chomp
+        entry = Entry.find(choice.to_i)
+        if entry == nil
+            puts "There's no such entry, please try again"
+            edit_entry
+        else 
+            puts entry.content
+            puts "**************************"
+            puts "Are you sure you want to delete this entry? (Y/N)"
+            answer = gets.strip
+            if answer.capitalize == "Y" 
+                entry.destroy 
+                puts "Your entry has been destroyed!"
+            else
+                puts "I'll take you back to your journal"
+                journal_entries
+            end
+            
         end
     end
 
     def access_mood
-        puts "Welcome to feelings central!"
-        puts "1. Show ratings for the week"
-        puts "2. Summarize for the week"
-        puts "3. Exit"
-        choice = gets.strip
+        prompt = TTY::Prompt.new(active_color: :cyan)
+        choices = ["Show me today's ratings", "Summarize my ratings for the week", "Exit"]
+        input = prompt.select("Welcome to feelings central!", choices)
 
-        case (choice.to_i)
-        when 1
-            # mood_ratings Should take all mood ratings for the week and display them
+        case (input)
+        when "Show me today's ratings"
+            mood_ratings
             access_mood
-        when 2
-            # summarize_mood Should take all the mood ratings and present it nicely
-            # e.g You starting out this week feeling horribly, but you've improved to feel great!
+        when "Summarize my ratings for the week"
+            summarize_mood
             access_mood
-        when 3
+        when "Exit"
             main_menu
         else
             puts "*******************"
@@ -146,5 +225,18 @@ class AppController
             access_mood
         end
     end
+
+    def mood_ratings
+      user = User.find_by(name: @@current_user)
+      entry_array = Entry.where(user_id: user.id)
+      rating_array = entry_array.map { |entry| entry.rating.date == Date.today ? entry.rating : nil }.compact
+      binding.pry
+      rating_array.each do |rating| 
+        puts rating.value 
+        puts "*********"
+      end
+    end
+
+    
 
 end
