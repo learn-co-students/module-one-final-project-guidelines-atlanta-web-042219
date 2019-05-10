@@ -49,7 +49,7 @@ class AppController
         when "Your Mood"
             access_mood
         when "Exit"
-            puts "Thank you for using my app!"
+            puts "Thank you for seeing me today, I hope to see you again soon!"
             exit
         else
             puts "*******************"
