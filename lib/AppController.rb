@@ -34,7 +34,7 @@ class AppController
         puts "On a scale of 1 to 10, how are you feeling today?"
         new_rating = gets.strip
         jo = Rating.create(value: new_rating.to_i, date: Date.today)
-        binding.pry
+        # binding.pry
         puts "Thank you, let's just jump into it"
     end
 
@@ -229,7 +229,7 @@ class AppController
       user = User.find_by(name: @@current_user)
       entry_array = Entry.where(user_id: user.id)
       rating_array = entry_array.map { |entry| entry.rating.date == Date.today ? entry.rating : nil }.compact
-      binding.pry
+    #   binding.pry
       rating_array.each do |rating| 
         if (1..3).include?(rating.value)
             puts "Straight crap"
