@@ -4,7 +4,7 @@ class AppCLI
   @@pastel = Pastel.new
 
   def run
-    puts @@pastel.white.on_black@@font.write("Game of Thrones 2.0!")
+    puts @@pastel.red.on_black.bold@@font.write("Game of Thrones 2.0!")
 
     main_menu
   end
@@ -184,7 +184,7 @@ class AppCLI
   end
 
   def level_eight
-    puts "You made it to the Red Keep and want for the throne.\n"
+    puts @@pastel.red.bold"You made it to the Red Keep and want for the throne.\n"
     fight = @@prompt.select("What will you use to kill Queen Cersi?", ["White Walker's Ice Blade", "The Nightfall", "Crossbow"])
     @new_user.power += 50
     battle_cersi
