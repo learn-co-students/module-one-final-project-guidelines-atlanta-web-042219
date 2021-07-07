@@ -1,0 +1,35 @@
+def add_allegiance
+#   case @user_house
+#   when 1
+#     player = Allegiance.create()
+#     player.house_id = @targaryen.id
+#     player.member_id = @user_name.id
+#     player.oath = @targaryen.oath
+#   when 2
+#     player = Allegiance.create()
+#     player.house_id = stark.id
+#     player.member_id = @user_name.id
+#     player.oath = stark.oath
+#   when 3
+#     player = Allegiance.create()
+#     player.house_id = lannister.id
+#     player.member_id = @user_name.id
+#     player.oath = lannister.oath
+#   else
+#     puts "Not an option"
+#   end
+# end
+
+def add_allegiance
+#   player = Allegiance.create()
+#     player.house_id = stark.id
+#     player.member_id = @@user_name.id
+#     player.oath = stark.id
+# end
+
+def player_one
+#   player = Allegiance.create()
+#   player.house_id = targaryen.id
+#   player.member_id = @user_name.id
+#   player.oath = targaryen.oath
+# end
